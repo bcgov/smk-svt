@@ -1,0 +1,650 @@
+{
+    "name": "smk-svt",
+    "viewer": {
+        "type": "leaflet",
+        "location": {
+            "center": [
+                -124.76074218750001,
+                51.876490970614775
+            ],
+            "extent": [
+                -133.33007812500003,
+                46.58906908309185,
+                -116.19140625000001,
+                56.607885465009254
+            ],
+            "zoom": 6
+        },
+        "esriApiKey": "AAPK5bb722086a57494ca489964673efa00d37WUlSAxF-Kidlq4FZFTqYz4VfTlzv-j7yxXp_wf1xNSTvuj-AtEaPBUAKXbwVbr",
+        "baseMap": "Streets"
+    },
+    "layers": [
+        {
+            "type": "esri-dynamic",
+            "id": 447,
+            "title": "Regional Districts - ABMS - Outlined",
+            "isVisible": true,
+            "isQueryable": true,
+            "opacity": 0.65,
+            "minScale": 12000000,
+            "maxScale": 0,
+            "titleAttribute": null,
+            "attributes": [
+                {
+                    "name": "LGL_ADMIN_AREA_ID",
+                    "title": "Lgl Admin Area Id",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_NAME",
+                    "title": "Admin Area Name",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_ABBREVIATION",
+                    "title": "Admin Area Abbreviation",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_BOUNDARY_TYPE",
+                    "title": "Admin Area Boundary Type",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_GROUP_NAME",
+                    "title": "Admin Area Group Name",
+                    "visible": true
+                },
+                {
+                    "name": "CHANGE_REQUESTED_ORG",
+                    "title": "Change Requested Org",
+                    "visible": true
+                },
+                {
+                    "name": "UPDATE_TYPE",
+                    "title": "Update Type",
+                    "visible": true
+                },
+                {
+                    "name": "WHEN_UPDATED",
+                    "title": "When Updated",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_AREA_SQM",
+                    "title": "Feature Area Sqm",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_LENGTH_M",
+                    "title": "Feature Length M",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE",
+                    "title": "Shape",
+                    "visible": true
+                },
+                {
+                    "name": "OBJECTID",
+                    "title": "Objectid",
+                    "visible": true
+                },
+                {
+                    "name": "SE_ANNO_CAD_DATA",
+                    "title": "Se Anno Cad Data",
+                    "visible": false
+                },
+                {
+                    "name": "SHAPE.AREA",
+                    "title": "Shape.area",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE.LEN",
+                    "title": "Shape.len",
+                    "visible": true
+                },
+                {
+                    "name": "AFFECTED_ADMIN_AREA_ABRVN",
+                    "title": "AFFECTED_ADMIN_AREA_ABRVN",
+                    "visible": true
+                },
+                {
+                    "name": "MAP_STATUS",
+                    "title": "MAP_STATUS",
+                    "visible": true
+                },
+                {
+                    "name": "OIC_MO_NUMBER",
+                    "title": "OIC_MO_NUMBER",
+                    "visible": true
+                },
+                {
+                    "name": "OIC_MO_YEAR",
+                    "title": "OIC_MO_YEAR",
+                    "visible": true
+                },
+                {
+                    "name": "OIC_MO_TYPE",
+                    "title": "OIC_MO_TYPE",
+                    "visible": true
+                },
+                {
+                    "name": "WEBSITE_URL",
+                    "title": "WEBSITE_URL",
+                    "visible": true
+                },
+                {
+                    "name": "IMAGE_URL",
+                    "title": "IMAGE_URL",
+                    "visible": true
+                }
+            ],
+            "queries": null,
+            "mpcmId": "447",
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":447,\"minScale\":12000000,\"maxScale\":0,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_REGIONAL_DISTRICTS_SP\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[0,0,0,0],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[130,130,130,255],\"width\":2}},\"label\":\"Regional Districts\",\"description\":\"\"},\"transparency\":0,\"labelingInfo\":[{\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":null,\"labelExpression\":\"[ADMIN_AREA_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,0,0,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"baseline\",\"horizontalAlignment\":\"left\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[255,255,255,253],\"haloSize\":1,\"font\":{\"family\":\"Arial\",\"size\":9,\"style\":\"normal\",\"weight\":\"bold\",\"decoration\":\"none\"}},\"minScale\":2000000,\"maxScale\":0}]}}"
+            ],
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/d1aff64e-dbfe-45a6-af97-582b7f6418b9"
+        },
+        {
+            "type": "esri-dynamic",
+            "id": 5392,
+            "title": "Regional Districts - ABMS - Colour Themed",
+            "isVisible": true,
+            "isQueryable": true,
+            "opacity": 0.65,
+            "minScale": 12000000,
+            "maxScale": 0,
+            "titleAttribute": null,
+            "attributes": [
+                {
+                    "name": "LGL_ADMIN_AREA_ID",
+                    "title": "Lgl Admin Area Id",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_NAME",
+                    "title": "Admin Area Name",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_ABBREVIATION",
+                    "title": "Admin Area Abbreviation",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_BOUNDARY_TYPE",
+                    "title": "Admin Area Boundary Type",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_GROUP_NAME",
+                    "title": "Admin Area Group Name",
+                    "visible": true
+                },
+                {
+                    "name": "CHANGE_REQUESTED_ORG",
+                    "title": "Change Requested Org",
+                    "visible": true
+                },
+                {
+                    "name": "UPDATE_TYPE",
+                    "title": "Update Type",
+                    "visible": true
+                },
+                {
+                    "name": "WHEN_UPDATED",
+                    "title": "When Updated",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_AREA_SQM",
+                    "title": "Feature Area Sqm",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_LENGTH_M",
+                    "title": "Feature Length M",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE",
+                    "title": "Shape",
+                    "visible": true
+                },
+                {
+                    "name": "OBJECTID",
+                    "title": "Objectid",
+                    "visible": true
+                },
+                {
+                    "name": "SE_ANNO_CAD_DATA",
+                    "title": "Se Anno Cad Data",
+                    "visible": false
+                },
+                {
+                    "name": "SHAPE.AREA",
+                    "title": "Shape.area",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE.LEN",
+                    "title": "Shape.len",
+                    "visible": true
+                },
+                {
+                    "name": "AFFECTED_ADMIN_AREA_ABRVN",
+                    "title": "AFFECTED_ADMIN_AREA_ABRVN",
+                    "visible": true
+                },
+                {
+                    "name": "MAP_STATUS",
+                    "title": "MAP_STATUS",
+                    "visible": true
+                },
+                {
+                    "name": "OIC_MO_NUMBER",
+                    "title": "OIC_MO_NUMBER",
+                    "visible": true
+                },
+                {
+                    "name": "OIC_MO_YEAR",
+                    "title": "OIC_MO_YEAR",
+                    "visible": true
+                },
+                {
+                    "name": "OIC_MO_TYPE",
+                    "title": "OIC_MO_TYPE",
+                    "visible": true
+                },
+                {
+                    "name": "WEBSITE_URL",
+                    "title": "WEBSITE_URL",
+                    "visible": true
+                },
+                {
+                    "name": "IMAGE_URL",
+                    "title": "IMAGE_URL",
+                    "visible": true
+                }
+            ],
+            "queries": null,
+            "mpcmId": "5392",
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":5392,\"minScale\":12000000,\"maxScale\":0,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_REGIONAL_DISTRICTS_SP\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"uniqueValue\",\"field1\":\"ADMIN_AREA_NAME\",\"field2\":null,\"field3\":null,\"defaultSymbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[217,193,245,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"defaultLabel\":\"<all other values>\",\"uniqueValueInfos\":[{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,197,189,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Capital Regional District\",\"label\":\"Capital Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[209,252,199,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Cariboo Regional District\",\"label\":\"Cariboo Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[191,252,179,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Central Coast Regional District\",\"label\":\"Central Coast Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[251,179,252,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Columbia-Shuswap Regional District\",\"label\":\"Columbia-Shuswap Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,238,187,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Comox Valley Regional District\",\"label\":\"Comox Valley Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[236,215,252,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Cowichan Valley Regional District\",\"label\":\"Cowichan Valley Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[197,212,252,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Fraser Valley Regional District\",\"label\":\"Fraser Valley Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,222,189,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Metro Vancouver Regional District\",\"label\":\"Metro Vancouver Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[223,252,182,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"North Coast Regional District\",\"label\":\"North Coast Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,241,207,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Peace River Regional District\",\"label\":\"Peace River Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,179,226,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of Alberni-Clayoquot\",\"label\":\"Regional District of Alberni-Clayoquot\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[179,239,252,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of Bulkley-Nechako\",\"label\":\"Regional District of Bulkley-Nechako\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,210,230,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of Central Kootenay\",\"label\":\"Regional District of Central Kootenay\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,207,243,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of Central Okanagan\",\"label\":\"Regional District of Central Okanagan\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[182,252,205,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of East Kootenay\",\"label\":\"Regional District of East Kootenay\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,211,194,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of Fraser-Fort George\",\"label\":\"Regional District of Fraser-Fort George\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[199,231,252,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of Kitimat-Stikine\",\"label\":\"Regional District of Kitimat-Stikine\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,182,189,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of Kootenay Boundary\",\"label\":\"Regional District of Kootenay Boundary\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[215,252,246,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of Mount Waddington\",\"label\":\"Regional District of Mount Waddington\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,232,215,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of Nanaimo\",\"label\":\"Regional District of Nanaimo\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,212,213,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of North Okanagan\",\"label\":\"Regional District of North Okanagan\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[204,199,252,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Regional District of Okanagan-Similkameen\",\"label\":\"Regional District of Okanagan-Similkameen\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[199,252,224,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Squamish-Lillooet Regional District\",\"label\":\"Squamish-Lillooet Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[252,194,221,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Stikine Region (Unincorporated)\",\"label\":\"Stikine Region (Unincorporated)\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[231,252,215,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Strathcona Regional District\",\"label\":\"Strathcona Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[242,252,194,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Sunshine Coast Regional District\",\"label\":\"Sunshine Coast Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[239,194,252,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"Thompson-Nicola Regional District\",\"label\":\"Thompson-Nicola Regional District\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[191,182,252,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[110,110,110,255],\"width\":0.4}},\"value\":\"qathet Regional District\",\"label\":\"qathet Regional District\",\"description\":\"\"}],\"fieldDelimiter\":\",\"},\"transparency\":20,\"labelingInfo\":[{\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":null,\"labelExpression\":\"[ADMIN_AREA_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,0,0,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"baseline\",\"horizontalAlignment\":\"left\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[255,255,255,255],\"haloSize\":1,\"font\":{\"family\":\"Arial\",\"size\":9,\"style\":\"normal\",\"weight\":\"bold\",\"decoration\":\"none\"}},\"minScale\":2000000,\"maxScale\":0}]}}"
+            ],
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/d1aff64e-dbfe-45a6-af97-582b7f6418b9"
+        },
+        {
+            "type": "esri-dynamic",
+            "id": 410,
+            "title": "Municipalities - ABMS - Outlined",
+            "isVisible": true,
+            "isQueryable": true,
+            "opacity": 0.65,
+            "minScale": 10000000,
+            "maxScale": 0,
+            "titleAttribute": null,
+            "attributes": [
+                {
+                    "name": "LGL_ADMIN_AREA_ID",
+                    "title": "Legal Admin Area Id",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_NAME",
+                    "title": "Admin Area Name",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_ABBREVIATION",
+                    "title": "Admin Area Abbreviation",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_BOUNDARY_TYPE",
+                    "title": "Admin Area Boundary Type",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_TYPE",
+                    "title": "Admin Area Type",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_GROUP_NAME",
+                    "title": "Admin Area Group Name",
+                    "visible": true
+                },
+                {
+                    "name": "CHANGE_REQUESTED_ORG",
+                    "title": "Change Requested Org",
+                    "visible": true
+                },
+                {
+                    "name": "UPDATE_TYPE",
+                    "title": "Update Type",
+                    "visible": true
+                },
+                {
+                    "name": "WHEN_UPDATED",
+                    "title": "When Updated",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_AREA_SQM",
+                    "title": "Feature Area Sqm",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_LENGTH_M",
+                    "title": "Feature Length M",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE",
+                    "title": "Shape",
+                    "visible": true
+                },
+                {
+                    "name": "OBJECTID",
+                    "title": "Objectid",
+                    "visible": true
+                },
+                {
+                    "name": "SE_ANNO_CAD_DATA",
+                    "title": "Se Anno Cad Data",
+                    "visible": false
+                },
+                {
+                    "name": "SHAPE.AREA",
+                    "title": "Shape.area",
+                    "visible": false
+                },
+                {
+                    "name": "SHAPE.LEN",
+                    "title": "Shape.len",
+                    "visible": false
+                },
+                {
+                    "name": "OIC_NUMBER",
+                    "title": "OIC Number",
+                    "visible": true
+                },
+                {
+                    "name": "OIC_YEAR",
+                    "title": "OIC Year",
+                    "visible": true
+                },
+                {
+                    "name": "AFFECTED_ADMIN_AREA_ABRVN",
+                    "title": "Affected Administrative Area Abreviation",
+                    "visible": true
+                }
+            ],
+            "queries": null,
+            "mpcmId": "410",
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":410,\"minScale\":10000000,\"maxScale\":0,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[0,0,0,0],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[78,78,78,255],\"width\":1.2}},\"label\":\"Municipalities\",\"description\":\"\"},\"transparency\":0,\"labelingInfo\":[{\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":null,\"labelExpression\":\"[ADMIN_AREA_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,0,0,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"baseline\",\"horizontalAlignment\":\"left\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[255,255,255,253],\"haloSize\":2,\"font\":{\"family\":\"Arial\",\"size\":8,\"style\":\"normal\",\"weight\":\"bold\",\"decoration\":\"none\"}},\"minScale\":500001,\"maxScale\":0}]}}"
+            ],
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/e3c3c580-996a-4668-8bc5-6aa7c7dc4932"
+        },
+        {
+            "type": "esri-dynamic",
+            "id": 5381,
+            "title": "Municipalities - ABMS - Colour Themed",
+            "isVisible": true,
+            "isQueryable": true,
+            "opacity": 0.65,
+            "minScale": 10000000,
+            "maxScale": 0,
+            "titleAttribute": null,
+            "attributes": [
+                {
+                    "name": "LGL_ADMIN_AREA_ID",
+                    "title": "Lgl Admin Area Id",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_NAME",
+                    "title": "Admin Area Name",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_ABBREVIATION",
+                    "title": "Admin Area Abbreviation",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_BOUNDARY_TYPE",
+                    "title": "Admin Area Boundary Type",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_TYPE",
+                    "title": "Admin Area Type",
+                    "visible": true
+                },
+                {
+                    "name": "ADMIN_AREA_GROUP_NAME",
+                    "title": "Admin Area Group Name",
+                    "visible": true
+                },
+                {
+                    "name": "CHANGE_REQUESTED_ORG",
+                    "title": "Change Requested Org",
+                    "visible": true
+                },
+                {
+                    "name": "UPDATE_TYPE",
+                    "title": "Update Type",
+                    "visible": true
+                },
+                {
+                    "name": "WHEN_UPDATED",
+                    "title": "When Updated",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_AREA_SQM",
+                    "title": "Feature Area Sqm",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_LENGTH_M",
+                    "title": "Feature Length M",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE",
+                    "title": "Shape",
+                    "visible": true
+                },
+                {
+                    "name": "OBJECTID",
+                    "title": "Objectid",
+                    "visible": true
+                },
+                {
+                    "name": "SE_ANNO_CAD_DATA",
+                    "title": "Se Anno Cad Data",
+                    "visible": false
+                },
+                {
+                    "name": "SHAPE.AREA",
+                    "title": "Shape.area",
+                    "visible": false
+                },
+                {
+                    "name": "SHAPE.LEN",
+                    "title": "Shape.len",
+                    "visible": false
+                },
+                {
+                    "name": "OIC_NUMBER",
+                    "title": "OIC Number",
+                    "visible": true
+                },
+                {
+                    "name": "OIC_YEAR",
+                    "title": "OIC Year",
+                    "visible": true
+                },
+                {
+                    "name": "AFFECTED_ADMIN_AREA_ABRVN",
+                    "title": "Affected Administrative Area Abreviation",
+                    "visible": true
+                }
+            ],
+            "queries": null,
+            "mpcmId": "5381",
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":5381,\"minScale\":10000000,\"maxScale\":0,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[232,190,255,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[104,104,104,255],\"width\":0.4}},\"label\":\"Municipalities\",\"description\":\"\"},\"transparency\":20,\"labelingInfo\":[{\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":null,\"labelExpression\":\"[ADMIN_AREA_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,0,0,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"baseline\",\"horizontalAlignment\":\"left\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[255,255,255,253],\"haloSize\":2,\"font\":{\"family\":\"Arial\",\"size\":8,\"style\":\"normal\",\"weight\":\"bold\",\"decoration\":\"none\"}},\"minScale\":500001,\"maxScale\":0}]}}"
+            ],
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/e3c3c580-996a-4668-8bc5-6aa7c7dc4932"
+        }
+    ],
+    "tools": [
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "list-menu",
+            "enabled": true,
+            "title": "Speculation and Vacancy Tax (SVT) Location Map"
+        },
+        {
+            "type": "pan",
+            "enabled": true
+        },
+        {
+            "type": "zoom",
+            "enabled": true
+        },
+        {
+            "type": "about",
+            "enabled": true,
+            "title": "About Speculation and Vacancy Tax (SVT) Location Map",
+            "position": "list-menu",
+            "content": "<p>Welcome to SMK!</p><p>Use this to look up the Speculation and Vacancy Tax rate for any location in British Columbia.</p>"
+        },
+        {
+            "order": 3,
+            "position": [
+                "shortcut-menu",
+                "list-menu"
+            ],
+            "icon": "layers",
+            "title": "Layers",
+            "command": {
+                "allVisibility": true,
+                "filter": true,
+                "legend": true
+            },
+            "glyph": {
+                "visible": "visibility",
+                "hidden": "visibility_off"
+            },
+            "type": "layers",
+            "enabled": true,
+            "display": [
+                {
+                    "id": 410
+                },
+                {
+                    "id": 5381
+                },
+                {
+                    "id": 447
+                },
+                {
+                    "id": 5392
+                }
+            ]
+        },
+        {
+            "type": "baseMaps",
+            "enabled": false
+        },
+        {
+            "type": "identify",
+            "enabled": true,
+            "showPanel": true,
+            "showWidget": true,
+            "style": {
+                "strokeWidth": 1,
+                "strokeStyle": "1, 1",
+                "strokeColor": "#000000",
+                "strokeOpacity": 0.8,
+                "fillColor": "#000000",
+                "fillOpacity": 0.5,
+                "markerSize": [
+                    20,
+                    20
+                ],
+                "markerOffset": [
+                    10,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "search",
+            "enabled": true
+        },
+        {
+            "type": "coordinate",
+            "enabled": false
+        },
+        {
+            "type": "measure",
+            "enabled": false
+        },
+        {
+            "type": "markup",
+            "enabled": false
+        },
+        {
+            "type": "scale",
+            "enabled": false
+        },
+        {
+            "type": "minimap",
+            "enabled": false
+        },
+        {
+            "type": "directions",
+            "enabled": false
+        },
+        {
+            "type": "location",
+            "enabled": false
+        },
+        {
+            "type": "select",
+            "enabled": false
+        },
+        {
+            "type": "geomark",
+            "geomarkService": {
+                "url": "https://apps.gov.bc.ca/pub/geomark"
+            },
+            "position": "list-menu",
+            "enabled": false
+        }
+    ],
+    "version": "1.1.9",
+    "createdBy": "BC Data Map Team",
+    "createdDate": "2023-04-05T18:37:19.590Z"
+}
