@@ -1,0 +1,13 @@
+{
+    "name": "smk-svt",
+    "version": "0.0.1",
+    "description": "Use this to look up the Speculation and Vacancy Tax rate for any location in British Columbia.",
+    "author": "BC Data Map Team",
+    "dependencies": {
+        "@bcgov/smk": "1.1.9",
+        "http-server": "^0.12.3"
+    },
+    "scripts": {
+        "view": "http-server -o -c-1"
+    }
+}
