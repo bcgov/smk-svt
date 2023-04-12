@@ -537,7 +537,7 @@
             "enabled": true,
             "title": "About Speculation and Vacancy Tax (SVT) Location Map",
             "position": "list-menu",
-            "content": "<p>Welcome to SMK!</p><p>Use this to look up the Speculation and Vacancy Tax rate for any location in British Columbia.</p>"
+            "content": "<p>Use this to look up the Speculation and Vacancy Tax rate for any location in British Columbia.</p>"
         },
         {
             "order": 3,
