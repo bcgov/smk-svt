@@ -47,7 +47,7 @@ jobs:
         fetch-depth: 0
 
     - name: Building image
-      uses: bcgov/smk-actions/smk-deploy@V1
+      uses: bcgov/smk-actions/smk-build@main
       id: buildSMKImage
       if: env.OPENSHIFT_SERVER_URL != '' &&  env.OPENSHIFT_TOKEN_DEV != '' && env.GHCR_USER != '' && env.GHCR_TOKEN != ''
       with:
@@ -58,7 +58,7 @@ jobs:
         DOCKER_REGISTRY: 'docker.pkg.github.com'
 
     - name: deploying dev
-      uses: bcgov/smk-actions/smk-deploy@V1
+      uses: bcgov/smk-actions/smk-deploy@main
       id: deploySMKContainer
       if: env.OPENSHIFT_SERVER_URL != '' &&  env.OPENSHIFT_TOKEN_DEV != '' && env.GHCR_USER != '' && env.GHCR_TOKEN != ''
       with:
