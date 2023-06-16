@@ -576,20 +576,24 @@
             "enabled": true,
             "display": [
                 {
-                    "id": 410
-                },
-                {
-                    "id": 5381
-                },
-                {
-                    "id": 447
-                },
-                {
-                    "id": 5392
-                },
-                {
                     "id": "0--default",
                     "isVisible": true
+                },
+                {
+                    "id": 410,
+                    "isVisible": false
+                },
+                {
+                    "id": 5381,
+                    "isVisible": false
+                },
+                {
+                    "id": 447,
+                    "isVisible": false
+                },
+                {
+                    "id": 5392,
+                    "isVisible": false
                 }
             ]
         },
