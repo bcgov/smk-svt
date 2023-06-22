@@ -1,0 +1,44 @@
+{
+    "id": 0,
+    "minScale": 9244648.868618,
+    "maxScale": 0,
+    "source": {
+        "type": "dataLayer",
+        "dataSource": {
+            "type": "table",
+            "workspaceId": "MPCM_ALL_PUB",
+            "dataSourceName": "WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP",
+            "gdbVersion": ""
+        }
+    },
+    "drawingInfo": {
+        "renderer": {
+            "type": "simple",
+            "symbol": {
+                "type": "esriSFS",
+                "style": "esriSFSSolid",
+                "color": [
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "outline": {
+                    "type": "esriSLS",
+                    "style": "esriSLSSolid",
+                    "color": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "width": 0.4
+                }
+            },
+            "label": "",
+            "description": ""
+        },
+        "transparency": 0,
+        "labelingInfo": null
+    }
+}

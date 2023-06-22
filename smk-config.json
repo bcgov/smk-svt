@@ -532,7 +532,7 @@
         {
             "type": "esri-feature",
             "id": "999",
-            "title": "BCA Jurisdictions (ArcGIS Feature)",
+            "title": "BCA Jurisdictions (Esri Feature)",
             "isVisible": true,
             "isQueryable": true,
             "serviceUrl": "https://arcgis.bcassessment.ca/ext_wa/rest/services/BCA_Jurisdictions/MapServer/0",
@@ -593,7 +593,75 @@
                     "visible": true
                 }
             ]
-          }
+        },
+        {
+            "type": "esri-dynamic",
+            "id": 1,
+            "title": "BCA Jurisdictions (Esri Dynamic)",
+            "isVisible": true,
+            "isQueryable": true,
+            "minScale": 10000000,
+            "maxScale": 0,
+            "queries": null,
+            "serviceUrl": "https://arcgis.bcassessment.ca/ext_wa/rest/services/BCA_Jurisdictions/MapServer",
+            "opacity": 0.65,
+            "titleAttribute": "MUNICIPALI",
+            "dynamicLayers": [
+                "{\"id\":0,\"minScale\":9244648.868618,\"maxScale\":0}"
+            ],
+            "attributes": [
+                {
+                    "name": "OBJECTID",
+                    "title": "OBJECTID",
+                    "visible": true
+                },
+                {
+                    "name": "MUNICIPALI",
+                    "title": "MUNICIPALI",
+                    "visible": true
+                },
+                {
+                    "name": "JUR",
+                    "title": "JUR",
+                    "visible": true
+                },
+                {
+                    "name": "SOURCE",
+                    "title": "SOURCE",
+                    "visible": true
+                },
+                {
+                    "name": "AQUISITION_DATE",
+                    "title": "AQUISITION_DATE",
+                    "visible": true
+                },
+                {
+                    "name": "AA",
+                    "title": "AA",
+                    "visible": true
+                },
+                {
+                    "name": "TECH",
+                    "title": "TECH",
+                    "visible": true
+                },
+                {
+                    "name": "AC",
+                    "title": "AC",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE.STArea()",
+                    "title": "SHAPE.STArea()",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE.STLength()",
+                    "title": "SHAPE.STLength()",
+                    "visible": true
+                }
+            ]
+        }
     ],
     "tools": [
         {
@@ -642,6 +710,10 @@
             "display": [
                 {
                     "id": 999,
+                    "isVisible": false
+                },
+                {
+                    "id": 1,
                     "isVisible": false
                 },
                 {
