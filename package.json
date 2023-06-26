@@ -5,11 +5,9 @@
     "author": "BC Data Map Team",
     "dependencies": {
         "@bcgov/smk": "1.1.11",
-        "http-server": "^14.1.1",
-        "patch-package": "^7.0.0"
+        "http-server": "^14.1.1"
     },
     "scripts": {
-        "postinstall": "patch-package",
         "view": "http-server -o -c-1"
     }
 }
