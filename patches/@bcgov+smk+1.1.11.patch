@@ -1,0 +1,17 @@
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-esri-feature-leaflet.js b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-esri-feature-leaflet.js
+index 3e28acc..084083b 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-esri-feature-leaflet.js
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-esri-feature-leaflet.js
+@@ -37,6 +37,12 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
+                 cfg.drawingInfo.renderer.symbol.url = ( new URL( cfg.drawingInfo.renderer.symbol.url, document.location ) ).toString()
+         }
+ 
++        // TEST
++
++        cfg.simplifyFactor = 1
++        
++        // END TEST
++
+         const overlayPane = self.map.getPane('overlayPane');
+         const layerPane = self.map.createPane(layers[0].config.id, overlayPane);
+         layerPane.style.zIndex = zIndex;
