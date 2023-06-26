@@ -711,7 +711,7 @@
             "display": [
                 {
                     "id": 999,
-                    "isVisible": false
+                    "isVisible": true
                 },
                 {
                     "id": 1,
