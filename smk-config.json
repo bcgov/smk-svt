@@ -539,32 +539,32 @@
             "opacity": 0.65,
             "scaleMin": null,
             "scaleMax": null,
-            "popupTemplate": "@wf-feature",
             "titleAttribute": "MUNICIPALI",
             "attributes": [
                 {
                     "name": "OBJECTID",
-                    "title": "OBJECTID",
+                    "title": "Object ID",
                     "visible": true
                 },
                 {
                     "name": "MUNICIPALI",
-                    "title": "MUNICIPALI",
+                    "title": "Municipality",
                     "visible": true
                 },
                 {
                     "name": "JUR",
-                    "title": "JUR",
+                    "title": "Jurisdiction",
                     "visible": true
                 },
                 {
                     "name": "SOURCE",
-                    "title": "SOURCE",
+                    "title": "Source",
                     "visible": true
                 },
                 {
                     "name": "AQUISITION_DATE",
-                    "title": "AQUISITION_DATE",
+                    "title": "Acquisition Date",
+                    "format": "asLocalTimestamp",
                     "visible": true
                 },
                 {
