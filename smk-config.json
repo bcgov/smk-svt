@@ -540,6 +540,7 @@
             "scaleMin": null,
             "scaleMax": null,
             "titleAttribute": "MUNICIPALI",
+            "simplifyFactor": 1,
             "attributes": [
                 {
                     "name": "OBJECTID",
