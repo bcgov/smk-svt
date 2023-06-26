@@ -6,8 +6,8 @@
         "type": "dataLayer",
         "dataSource": {
             "type": "table",
-            "workspaceId": "MPCM_ALL_PUB",
-            "dataSourceName": "WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP",
+            "workspaceId": "",
+            "dataSourceName": "OPS.SDE.BCA_JURISDICTIONS",
             "gdbVersion": ""
         }
     },
