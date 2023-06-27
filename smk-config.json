@@ -512,6 +512,47 @@
                 "{\"id\":5381,\"minScale\":10000000,\"maxScale\":0,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[232,190,255,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[104,104,104,255],\"width\":0.4}},\"label\":\"Municipalities\",\"description\":\"\"},\"transparency\":20,\"labelingInfo\":[{\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":null,\"labelExpression\":\"[ADMIN_AREA_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,0,0,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"baseline\",\"horizontalAlignment\":\"left\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[255,255,255,253],\"haloSize\":2,\"font\":{\"family\":\"Arial\",\"size\":8,\"style\":\"normal\",\"weight\":\"bold\",\"decoration\":\"none\"}},\"minScale\":500001,\"maxScale\":0}]}}"
             ],
             "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/e3c3c580-996a-4668-8bc5-6aa7c7dc4932"
+        },
+        {
+            "type": "esri-feature",
+            "id": "999",
+            "title": "BC Assessment Jurisdictions",
+            "isVisible": true,
+            "isQueryable": true,
+            "serviceUrl": "https://arcgis.bcassessment.ca/ext_wa/rest/services/BCA_Jurisdictions/MapServer/0",
+            "opacity": 0.65,
+            "scaleMin": null,
+            "scaleMax": null,
+            "titleAttribute": "MUNICIPALI",
+            "simplifyFactor": 1,
+            "attributes": [
+                {
+                    "name": "OBJECTID",
+                    "title": "Object ID",
+                    "visible": true
+                },
+                {
+                    "name": "MUNICIPALI",
+                    "title": "Municipality",
+                    "visible": true
+                },
+                {
+                    "name": "JUR",
+                    "title": "Jurisdiction",
+                    "visible": true
+                },
+                {
+                    "name": "SOURCE",
+                    "title": "Source",
+                    "visible": true
+                },
+                {
+                    "name": "AQUISITION_DATE",
+                    "title": "Acquisition Date",
+                    "format": "asLocalTimestamp",
+                    "visible": true
+                }
+            ]
         }
     ],
     "tools": [
@@ -537,7 +578,7 @@
             "enabled": true,
             "title": "About Speculation and Vacancy Tax (SVT) Location Map",
             "position": "list-menu",
-            "content": "<p>Use this to look up the Speculation and Vacancy Tax rate for any location in British Columbia.</p>"
+            "content": "<p>Use this to find the Speculation and Vacancy Tax boundaries for locations in British Columbia.</p>"
         },
         {
             "order": 3,
@@ -560,16 +601,24 @@
             "enabled": true,
             "display": [
                 {
-                    "id": 410
+                    "id": 999,
+                    "isVisible": true
                 },
                 {
-                    "id": 5381
+                    "id": 410,
+                    "isVisible": false
                 },
                 {
-                    "id": 447
+                    "id": 5381,
+                    "isVisible": false
                 },
                 {
-                    "id": 5392
+                    "id": 447,
+                    "isVisible": false
+                },
+                {
+                    "id": 5392,
+                    "isVisible": false
                 }
             ]
         },
