@@ -567,31 +567,6 @@
                     "title": "Acquisition Date",
                     "format": "asLocalTimestamp",
                     "visible": true
-                },
-                {
-                    "name": "AA",
-                    "title": "AA",
-                    "visible": true
-                },
-                {
-                    "name": "TECH",
-                    "title": "TECH",
-                    "visible": true
-                },
-                {
-                    "name": "AC",
-                    "title": "AC",
-                    "visible": true
-                },
-                {
-                    "name": "SHAPE.STArea()",
-                    "title": "SHAPE.STArea()",
-                    "visible": true
-                },
-                {
-                    "name": "SHAPE.STLength()",
-                    "title": "SHAPE.STLength()",
-                    "visible": true
                 }
             ]
         },
@@ -634,31 +609,6 @@
                 {
                     "name": "AQUISITION_DATE",
                     "title": "AQUISITION_DATE",
-                    "visible": true
-                },
-                {
-                    "name": "AA",
-                    "title": "AA",
-                    "visible": true
-                },
-                {
-                    "name": "TECH",
-                    "title": "TECH",
-                    "visible": true
-                },
-                {
-                    "name": "AC",
-                    "title": "AC",
-                    "visible": true
-                },
-                {
-                    "name": "SHAPE.STArea()",
-                    "title": "SHAPE.STArea()",
-                    "visible": true
-                },
-                {
-                    "name": "SHAPE.STLength()",
-                    "title": "SHAPE.STLength()",
                     "visible": true
                 }
             ]
