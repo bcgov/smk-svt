@@ -514,25 +514,9 @@
             "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/e3c3c580-996a-4668-8bc5-6aa7c7dc4932"
         },
         {
-            "type": "wms",
-            "id": "0--default",
-            "title": "BCA Jurisdictions (WMS)",
-            "isVisible": true,
-            "isQueryable": true,
-            "opacity": 0.65,
-            "minScale": null,
-            "maxScale": null,
-            "titleAttribute": null,
-            "attributes": false,
-            "queries": null,
-            "serviceUrl": "https://arcgis.bcassessment.ca/ext_wa/services/BCA_Jurisdictions/MapServer/WMSServer",
-            "layerName": "0",
-            "styleName": "default"
-        },
-        {
             "type": "esri-feature",
             "id": "999",
-            "title": "BCA Jurisdictions (Esri Feature)",
+            "title": "BC Assessment Jurisdictions",
             "isVisible": true,
             "isQueryable": true,
             "serviceUrl": "https://arcgis.bcassessment.ca/ext_wa/rest/services/BCA_Jurisdictions/MapServer/0",
@@ -569,49 +553,6 @@
                     "visible": true
                 }
             ]
-        },
-        {
-            "type": "esri-dynamic",
-            "id": 1,
-            "title": "BCA Jurisdictions (Esri Dynamic)",
-            "isVisible": true,
-            "isQueryable": true,
-            "minScale": 10000000,
-            "maxScale": 0,
-            "queries": null,
-            "serviceUrl": "https://arcgis.bcassessment.ca/ext_wa/rest/services/BCA_Jurisdictions/MapServer",
-            "opacity": 0.65,
-            "titleAttribute": "MUNICIPALI",
-            "dynamicLayers": [
-                "{\"id\": 0, \"minScale\": 9244648.868618, \"maxScale\": 0, \"source\": {\"type\": \"dataLayer\", \"dataSource\": {\"type\": \"table\", \"workspaceId\": \"OPS.SDE\", \"dataSourceName\": \"BCA_JURISDICTIONS\", \"gdbVersion\": \"\"}}, \"drawingInfo\": {\"renderer\": {\"type\": \"simple\", \"symbol\": {\"type\": \"esriSFS\", \"style\": \"esriSFSSolid\", \"color\": [0,0,0,0], \"outline\": {\"type\": \"esriSLS\", \"style\": \"esriSLSSolid\", \"color\": [0,0,0,255], \"width\": 0.4}}, \"label\": \"\", \"description\": \"\"}, \"transparency\": 0, \"labelingInfo\": null}}"
-            ],
-            "attributes": [
-                {
-                    "name": "OBJECTID",
-                    "title": "OBJECTID",
-                    "visible": true
-                },
-                {
-                    "name": "MUNICIPALI",
-                    "title": "MUNICIPALI",
-                    "visible": true
-                },
-                {
-                    "name": "JUR",
-                    "title": "JUR",
-                    "visible": true
-                },
-                {
-                    "name": "SOURCE",
-                    "title": "SOURCE",
-                    "visible": true
-                },
-                {
-                    "name": "AQUISITION_DATE",
-                    "title": "AQUISITION_DATE",
-                    "visible": true
-                }
-            ]
         }
     ],
     "tools": [
@@ -637,7 +578,7 @@
             "enabled": true,
             "title": "About Speculation and Vacancy Tax (SVT) Location Map",
             "position": "list-menu",
-            "content": "<p>Use this to look up the Speculation and Vacancy Tax rate for any location in British Columbia.</p>"
+            "content": "<p>Use this to find the Speculation and Vacancy Tax boundaries for locations in British Columbia.</p>"
         },
         {
             "order": 3,
@@ -662,14 +603,6 @@
                 {
                     "id": 999,
                     "isVisible": true
-                },
-                {
-                    "id": 1,
-                    "isVisible": false
-                },
-                {
-                    "id": "0--default",
-                    "isVisible": false
                 },
                 {
                     "id": 410,
