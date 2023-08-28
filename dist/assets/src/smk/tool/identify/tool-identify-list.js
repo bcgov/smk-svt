@@ -17,7 +17,7 @@ include.module( 'tool-identify.tool-identify-list-js', [
     Vue.component( 'identify-panel', {
         extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-identify.panel-identify-html' ],
-        props: [ 'tool', 'layers', 'highlightId', 'command', 'radius', 'radiusUnit' ],
+        props: [ 'tool', 'layers', 'highlightId', 'command', 'radius', 'radiusUnit', 'hasSearchResults', 'noResultsMessage' ],
         methods: {
             formatNumber: function ( value, fractionPlaces ) {
                 var i = Math.floor( value ),
@@ -40,14 +40,20 @@ include.module( 'tool-identify.tool-identify-list-js', [
             this.defineProp( 'command' )
             this.defineProp( 'radius' )
             this.defineProp( 'radiusUnit' )
+            this.defineProp( 'hasSearchResults' )
+            this.defineProp( 'noResultsMessage' )
 
             this.tool = {}
+            this.hasSearchResults = undefined
         },
 
         initialize: function ( smk ) {
             var self = this
 
             this.tool = smk.getToolTypesAvailable()
+
+            var defaultNoResultsMessage = 'No features found'
+            this.noResultsMessage = this.noResultsMessage || defaultNoResultsMessage
 
             this.changedGroup( function () {
                 if ( self.group ) {
@@ -82,6 +88,7 @@ include.module( 'tool-identify.tool-identify-list-js', [
                 }
                 else {
                     SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
+                    self.hasSearchResults = undefined
                 }
             } )
 
@@ -140,12 +147,19 @@ include.module( 'tool-identify.tool-identify-list-js', [
                         self.busy = false
 
                         if ( smk.$viewer.identified.isEmpty() ) {
-                            smk.$sidepanel.setExpand( 0 )
-                            self.setInternalLayerVisible( false )
-                            self.showStatusMessage( 'No features found', 'warning' )
+                            if (self.showPanel) {
+                                self.hasSearchResults = false
+                                self.setInternalLayerVisible( false )
+                                self.clearStatusMessage()
+                            } else {
+                                smk.$sidepanel.setExpand( 0 )
+                                self.setInternalLayerVisible( false )
+                                self.showStatusMessage( self.noResultsMessage, 'warning' )
+                            }
                         }
                         else {
                             self.active = true
+                            self.hasSearchResults = true
 
                             var stat = smk.$viewer.identified.getStats()
                             var sub = SMK.UTIL.grammaticalNumber( stat.layerCount, null, null, 'on {} layers' )

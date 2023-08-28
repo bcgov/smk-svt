@@ -50,4 +50,9 @@
     <div v-if="layers.length == 0">
         Click on the map to identify features under the clicked point.
     </div>
+
+    <div v-if="hasSearchResults === false">
+        <hr>
+        {{ noResultsMessage }}
+    </div>
 </tool-panel>

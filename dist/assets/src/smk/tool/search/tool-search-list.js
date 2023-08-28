@@ -116,8 +116,8 @@ include.module( 'tool-search.tool-search-list-js', [
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    return SMK.TYPE.Tool.define( 'SearchListTool',
-        function () {
+    return SMK.TYPE.Tool.define( 'SearchListTool', {
+        construct: function () {
             SMK.TYPE.ToolWidget.call( this, 'search-widget' )
             SMK.TYPE.ToolPanel.call( this, 'search-panel' )
 
@@ -127,18 +127,11 @@ include.module( 'tool-search.tool-search-list-js', [
 
             this.results = []
         },
-        function ( smk ) {
+        initialize: function ( smk ) {
             var self = this
 
             smk.$container.classList.add( 'smk-tool-search' )
 
-            this.changedActive( function () {
-                if ( self.active )
-                    SMK.HANDLER.get( self.id, 'activated' )( smk, self )
-                else
-                    SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
-            } )
-    
             smk.on( this.id, {
                 'activate': function ( ev ) {
                     if ( !ev.toggle )
@@ -149,7 +142,6 @@ include.module( 'tool-search.tool-search-list-js', [
                     smk.$viewer.searched.clear()
 
                     self.busy = true
-                    //self.title = 'Locations matching <wbr>"' + ev.text + '"'
                     doAddressSearch( ev.text )
                         .then( function ( features ) {
                             self.active = true
@@ -166,12 +158,21 @@ include.module( 'tool-search.tool-search-list-js', [
                 },
 
                 'pick': function ( ev ) {
-                    smk.$viewer.searched.pick( null )
-                    smk.$viewer.searched.pick( ev.result.id )
-                    if ( !self.showPanel ) {
-                        self.active = false
-                        self.initialSearch = ev.result.title
-                    }
+                    // If identify = true (from smk-config.json), we want to trigger an identify operation at the selected address/location
+                    if (self.identify ) {
+                        self.startedSearchIdentify()
+                        smk.$viewer.identifyFeaturesAtPoint(ev.result.geometry, smk.$viewer.searchedIdentified, ev.result.id)
+                        smk.$viewer.searched.highlight( null )
+                        smk.$viewer.searched.pick( null )
+                        smk.$viewer.searched.pick( ev.result.id )
+                    } else {
+                        smk.$viewer.searched.pick( null )
+                        smk.$viewer.searched.pick( ev.result.id )
+                        if ( !self.showPanel ) {
+                            self.active = false
+                            self.initialSearch = ev.result.title
+                        }
+                    } 
                 },
 
                 'clear': function ( ev ) {
@@ -189,20 +190,19 @@ include.module( 'tool-search.tool-search-list-js', [
                 self.results = ev.features
             } )
 
-            // // smk.$viewer.selected.removedFeatures( function ( ev ) {
-            // // } )
-
             smk.$viewer.searched.pickedFeature( function ( ev ) {
-                self.highlightId = ev.feature && ev.feature.id
+                if (!self.identify) {
+                    self.highlightId = ev.feature && ev.feature.id
+                }
             } )
-
-            // // smk.$viewer.selected.highlightedFeatures( function ( ev ) {
-            // // } )
 
             smk.$viewer.searched.clearedFeatures( function ( ev ) {
                 self.results = []
             } )
-        }
-    )
+        },
+        events: [
+            'startedSearchIdentify'
+        ]
+    } )
 } )
 
