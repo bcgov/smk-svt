@@ -1,0 +1,29 @@
+<tool-panel class="smk-location-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <div class="smk-address">
+        <div class="smk-street">
+            <span class="smk-civic-number">{{ site.civicNumber }}</span>
+            <span class="smk-street-name">{{ site.streetName || 'No address for this location.' }}</span>
+            <span class="smk-street-type">{{ site.streetType }}</span>
+        </div>
+        <div class="smk-locality">
+            <span class="smk-locality-name">{{ site.localityName || '&nbsp;' }}</span>
+            <span class="smk-locality-type" v-if="site.localityType && site.localityType != 'Unknown'">({{ site.localityType }})</span>
+        </div>
+    </div>
+
+    <div class="smk-coordinate">
+        <span class="smk-ordinate">
+            <label>latitude<div>{{ site.latitude | formatNumber( 6, 3 ) }}</div></label>
+        </span>
+        <span class="smk-ordinate">
+            <label>longitude<div>{{ site.longitude | formatNumber( 6, 3 ) }}</div></label>
+        </span>
+    </div>
+
+</tool-panel>

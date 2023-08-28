@@ -1,0 +1,8 @@
+<div class="smk-shortcut-menu">
+    <component class="smk-tool"
+        v-for="w in widgets"
+        v-bind:key="w.prop.id"
+        v-bind:is="w.component"
+        v-bind="w.prop"
+    ></component>
+</div>

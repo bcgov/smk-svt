@@ -1,0 +1,41 @@
+.smk-overlay .smk-status-message-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+}
+
+.smk-status-message-container .smk-status-message {
+    display: flex;
+    align-items: center;
+
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    padding: 5px;
+}
+
+.smk-status-message .smk-spinner {
+    margin-right: 5px;
+}
+
+.smk-status-message .smk-message {
+    text-align: center;
+}
+
+.smk-status-message.smk-error .smk-message {
+    color: red;
+}
+
+.smk-status-message.smk-progress .smk-message {
+    color: blue;
+}
+
+.smk-status-message.smk-warning  .smk-message{
+    color: darkorange;
+}
+
