@@ -65,38 +65,15 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
 
         if ( !option.layer ) return
 
+        if (location.type !== "Point") return
+
         var features = []
-        var test = [ location.map.longitude, location.map.latitude ]
-        var toleranceKm = option.tolerance * view.metersPerPixel / 1000;
+        var test = [ location.coordinates[0], location.coordinates[1] ]
 
         option.layer.eachLayer( function ( ly ) {
             var ft = ly.toGeoJSON()
-
-            switch ( ft.geometry.type ) {
-            case 'Polygon':
-            case 'MultiPolygon':
-                if ( turf.booleanPointInPolygon( test, ft ) ) features.push( ft )
-                break
-
-            case 'LineString':
-            case 'MultiLineString':
-                var close1 = turf.segmentReduce( ft, function ( accum, segment ) {
-                    return accum || turf.pointToLineDistance( test, segment ) < toleranceKm
-                }, false )
-                if ( close1 ) features.push( ft )
-                break
-
-            case 'Point':
-            case 'MultiPoint':
-                var close2 = turf.coordReduce( ft, function ( accum, coord ) {
-                    return accum || turf.distance( coord, test ) < toleranceKm
-                }, false )
-                if ( close2 ) features.push( ft )
-                break
-
-            default:
-                console.warn( 'skip', ft.geometry.type )
-            }
+            var result = turf.booleanPointInPolygon(test, ft);
+            if ( result ) features.push( ft )
         } )
 
         return features
@@ -250,6 +227,8 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 } )
                 .then( function ( layer ) {
                     if ( !layers[ 0 ].config.useClustering ) return layer
+                    
+                    layer.maxZoom = 19;
 
                     // var cluster = L.markerClusterGroup( self.clusterOption )
                     var cluster = L.markerClusterGroup( clusterOptions( layers[ 0 ].config, self ) )

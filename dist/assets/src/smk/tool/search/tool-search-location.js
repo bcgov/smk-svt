@@ -43,27 +43,30 @@ include.module( 'tool-search.tool-search-location-js', [
             } )
 
             smk.$viewer.searched.pickedFeature( function ( ev ) {
-                self.locationComponent = {
-                    name: 'location',
-                    template: inc[ 'tool-search.location-address-html' ],
-                    data: function () {
-                        return {
-                            feature: ev.feature
+                if (!self.identify) {
+                    self.locationComponent = {
+                        name: 'location',
+                        template: inc[ 'tool-search.location-address-html' ],
+                        data: function () {
+                            return {
+                                feature: ev.feature
+                            }
                         }
                     }
-                }
-
-                self.titleComp = {
-                    name: 'location-title',
-                    template: inc[ 'tool-search.location-title-html' ],
-                    data: function () {
-                        return Object.assign( { intersectionName: null }, ev.feature.properties )
+    
+                    self.titleComp = {
+                        name: 'location-title',
+                        template: inc[ 'tool-search.location-title-html' ],
+                        data: function () {
+                            return Object.assign( { intersectionName: null }, ev.feature.properties )
+                        }
+                    }
+    
+                    if ( ev.feature && self.showLocation ) {
+                        self.active = true
                     }
                 }
 
-                if ( ev.feature && self.showLocation ) {
-                    self.active = true
-                }
             } )
         }
     )

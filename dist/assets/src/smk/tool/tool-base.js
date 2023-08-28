@@ -126,6 +126,10 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
                 return smk.getStatusMessage().show( message, status, delay, this.busy )
             }
 
+            this.clearStatusMessage = function () {
+                smk.getStatusMessage().clear()
+            }
+
             this.setDefaultDrawStyle = function() {
                 smk.$viewer.map.pm.setGlobalOptions({ 
                     templineStyle: { 

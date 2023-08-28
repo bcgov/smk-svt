@@ -1,0 +1,20 @@
+<tool-panel class="smk-search-identify-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
+    v-bind:layers="layers"
+    v-bind:searchHighlightId="searchHighlightId"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <feature-list
+        v-bind:layers="layers"
+        v-bind:highlightId="searchHighlightId"
+        v-on:active="$$emit( 'active', $event )"
+        v-on:hover="$$emit( 'hover', $event )"
+    ></feature-list>
+
+    <div v-if="!layers || !layers.length">
+        No municipal regional district tax applies at this location.
+    </div>
+</tool-panel>

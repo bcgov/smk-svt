@@ -103,16 +103,25 @@ include.module( 'tool-search-leaflet', [
         } )
 
         vw.searched.pickedFeature( function ( ev ) {
-            if ( ev.was ) {
-                var ly1 = ev.was.highlightLayer
-                brightHighlight( ly1, vw.searched.isHighlighted( ev.was.id ), false )
-            }
+            if (self.identify) {
+                identifyMarker.clearLayers()
 
-            if ( ev.feature ) {
-                brightHighlight( ev.feature.highlightLayer, true, true, ev.feature )
-
-                pickedMarker.clearLayers()
-                pickedMarker.addLayer( ev.feature.pickMarker )
+                if (ev.feature && ev.feature.pickMarker) {
+                    vw.map.removeLayer(searchMarkers)
+                    identifyMarker.addLayer(ev.feature.pickMarker)
+                }
+            } else {
+                if ( ev.was ) {
+                    var ly1 = ev.was.highlightLayer
+                    brightHighlight( ly1, vw.searched.isHighlighted( ev.was.id ), false )
+                }
+    
+                if ( ev.feature ) {
+                    brightHighlight( ev.feature.highlightLayer, true, true, ev.feature )
+    
+                    pickedMarker.clearLayers()
+                    pickedMarker.addLayer( ev.feature.pickMarker )
+                }
             }
         } )
 
