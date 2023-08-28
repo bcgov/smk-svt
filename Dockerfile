@@ -22,6 +22,7 @@ WORKDIR /srv
 # around having these two layers as when add assets to the copy command
 # it does not create the directory
 ADD  assets /srv/assets
+ADD dist /srv/dist
 COPY ["index.html", "smk-config.json", "smk-init.js", "/srv/"]
 COPY --from=BUILD_IMAGE /srv/node_modules /srv/node_modules
 
