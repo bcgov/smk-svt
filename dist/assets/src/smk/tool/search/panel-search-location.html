@@ -1,0 +1,11 @@
+<tool-panel class="smk-search-location-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <component class="smk-address"
+        v-bind:is="locationComponent"
+    ></component>
+</tool-panel>

@@ -1,0 +1,37 @@
+<tool-panel class="smk-query-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <template slot="commands">
+        <command-button class="smk-search"
+            v-bind:disabled="busy"
+            v-on:click="$$emit( 'execute' )"
+        >Search</command-button>
+
+        <toggle-button class="smk-within-extent"
+            v-if="command.within"
+            v-bind:value="within"
+            v-on:change="$$emit( 'change', { within: $event } )"
+        >Within View</toggle-button>
+    </template>
+
+    <div class="smk-parameters">
+        <component class="smk-parameter"
+            v-for="( parameter, i ) in parameters"
+            v-bind:key="parameter.id"
+            v-bind:is="parameter.component"
+            v-bind="parameter.prop"
+            v-on:input="$$emit( 'parameter-input',      { index: i, value: $event.value } )"
+            v-on:mounted="$$emit( 'parameter-mounted',  { index: i } )"
+            v-on:reset="$$emit( 'parameter-reset',      { index: i } )"
+            v-on:change="$$emit( 'parameter-change',    { index: i, active: $event.active } )"
+            v-on:pickDown="$emit( 'pickDown' )"
+            v-on:pickUp="$emit( 'pickUp' )"
+            v-on:execute="$$emit( 'execute' )"
+        ></component>
+    </div>
+
+</tool-panel>

@@ -1,0 +1,62 @@
+<tool-panel class="smk-measure-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <template slot="commands">
+        <command-button class="smk-area"
+            v-bind:disabled="busy"
+            v-on:click="$$emit( 'start-area' )"
+        >Area</command-button>
+
+        <command-button class="smk-distance"
+            v-bind:disabled="busy"
+            v-on:click="$$emit( 'start-distance' )"
+        >Distance</command-button>
+
+        <command-button class="smk-cancel"
+            v-if="viewer.leaflet"
+            v-bind:disabled="!busy"
+            v-on:click="$$emit( 'cancel' )"
+        >Cancel</command-button>
+
+        <select-dropdown class="smk-units"
+            v-if="viewer.leaflet"
+            v-bind:disabled="busy"
+            v-model="unit"
+            v-bind:options="[
+                { value: 'metric',          label: 'Metric' },
+                { value: 'imperial',        label: 'Imperial' },
+                { value: 'inches',          label: 'Inches' },
+                { value: 'feet',            label: 'Feet' },
+                { value: 'yards',           label: 'Yards' },
+                { value: 'miles',           label: 'Miles' },
+                { value: 'nautical-miles',  label: 'Nautical Miles' },
+                { value: 'meters',          label: 'Meters' },
+                { value: 'kilometers',      label: 'Kilometers' },
+                { value: 'acres',           label: 'Acres' },
+                { value: 'hectares',        label: 'Hectares' },
+            ]"
+        >
+        </select-dropdown>
+    </template>
+
+    <div class="smk-measure-container"
+        v-if="content"
+        v-content="content"
+    ></div>
+
+    <div class="smk-results"
+        v-if="results && results.length > 0"
+    >
+        <div class="smk-result"
+            v-for="result in results"
+        >
+            <span class="smk-measure-title" v-html="result.title"></span>
+            <span class="smk-value" v-html="dimensionalNumber( result.value, result.dim, unit, 5 )"></span>
+        </div>
+    </div>
+
+</tool-panel>
