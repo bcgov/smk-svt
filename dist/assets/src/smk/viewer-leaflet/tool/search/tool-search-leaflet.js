@@ -4,6 +4,8 @@ include.module( 'tool-search-leaflet', [
     'tool-search.marker-icon-yellow-png',
     'tool-search.marker-shadow-png',
     'tool-search.star-icon-yellow-png',
+    'tool-leaflet',
+    'tool-leaflet.tool-feature-list-leaflet-js'
 ], function ( inc ) {
     "use strict";
 
@@ -41,6 +43,14 @@ include.module( 'tool-search-leaflet', [
         popupAnchor:    [ 1, -24 ],
         shadowSize:     [ 31, 31 ]
     } )
+
+    SMK.TYPE.SearchIdentifyFeatureTool.addInitializer( function  ( smk ) {
+        var self = this
+
+        inc[ 'tool-leaflet.tool-feature-list-leaflet-js' ].call( this, smk )
+
+        var vw = smk.$viewer
+    })
 
     SMK.TYPE.SearchListTool.addInitializer( function ( smk ) {
         var self = this
