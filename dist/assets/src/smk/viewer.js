@@ -573,98 +573,98 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                     return self.screenToMap( p )
                 } )
         ] )
+    }
 
-        Viewer.prototype.identifyFeaturesAtPoint = function ( location, featureSet, fid ) {
-            var self = this
-    
-            var view = this.getView()
-    
-            featureSet.clear()
-    
-            var lock = this.acquireIdentifyMutex()
-    
-            if ( !location ) return
-    
-            function IdentifyDiscardedError() {
-                var e = Error( 'Identify at point results discarded' )
-                e.discarded = true
-                return e
+    Viewer.prototype.identifyFeaturesAtPoint = function ( location, featureSet, fid ) {
+        var self = this
+
+        var view = this.getView()
+
+        featureSet.clear()
+
+        var lock = this.acquireIdentifyMutex()
+
+        if ( !location ) return
+
+        function IdentifyDiscardedError() {
+            var e = Error( 'Identify at point results discarded' )
+            e.discarded = true
+            return e
+        }
+
+        var promises = []
+        this.layerIds.forEach( function ( id, i ) {
+            var ly = self.layerId[ id ]
+
+            if ( !self.isDisplayContextItemVisible( id ) ) return
+            if ( ly.config.isQueryable === false ) return
+            if ( !ly.inScaleRange( view ) ) return
+
+            var option = {
+                layer: self.visibleLayer[ id ]
             }
-    
-            var promises = []
-            this.layerIds.forEach( function ( id, i ) {
-                var ly = self.layerId[ id ]
-    
-                if ( !self.isDisplayContextItemVisible( id ) ) return
-                if ( ly.config.isQueryable === false ) return
-                if ( !ly.inScaleRange( view ) ) return
-    
-                var option = {
-                    layer: self.visibleLayer[ id ]
-                }
-    
-                var p = ly.getFeaturesAtPoint( location, view, option )
-                if ( !p ) return
-    
-                promises.push(
-                    SMK.UTIL.resolved().then( function () {
-                        if ( !lock.held() ) throw IdentifyDiscardedError()
-    
-                        return p
-                    } )
-                    .then( function ( features ) {
-                        if ( !lock.held() ) throw IdentifyDiscardedError()
-    
-                        features.forEach( function ( f, i ) {
-                            if ( ly.config.titleAttribute ) {
-                                var m = ly.config.titleAttribute.match( /^(.+?)(:[/](.+)[/])?$/ )
-                                if ( m ) {
-                                    if ( !m[ 2 ] )
-                                        f.title = f.properties[ m[ 1 ] ]
-                                    else
-                                        try {
-                                            f.title = f.properties[ m[ 1 ] ].match( new RegExp( m[ 3 ] ) )[ 1 ]
-                                        }
-                                        catch ( e ) {
-                                            console.warn( e, m )
-                                        }
-                                }
-                            }
-    
-                            if ( !f.title )
-                                f.title = 'Feature #' + ( i + 1 )
-    
-                            return f
-                        } )
-    
-                        return features
-                    } )
-                    .then( function ( features ) {
-                        if ( !lock.held() ) throw IdentifyDiscardedError()
-    
-                        features.forEach( function ( f ) {
-                            f._identifyPoint = location.map
-                        } )
-                        featureSet.add( id, features )
-                    } )
-                    .catch( function ( err ) {
-                        console.debug( id, 'identify at point fail:', err.message )
-                        if ( err.discarded ) throw err
-                    } )
-                )
-            } )
-    
-            return SMK.UTIL.waitAll( promises )
-                .finally( function () {
-                    if ( !lock.held() ) throw IdentifyDiscardedError()
-                    if (featureSet.isEmpty()) {
-                        self.searched.pick(fid);
-                        self.searched.highlight([fid]);
-                    }
-                } )
-        }
-        }
 
+            var p = ly.getFeaturesAtPoint( location, view, option )
+            if ( !p ) return
+
+            promises.push(
+                SMK.UTIL.resolved().then( function () {
+                    if ( !lock.held() ) throw IdentifyDiscardedError()
+
+                    return p
+                } )
+                .then( function ( features ) {
+                    if ( !lock.held() ) throw IdentifyDiscardedError()
+
+                    features.forEach( function ( f, i ) {
+                        if ( ly.config.titleAttribute ) {
+                            var m = ly.config.titleAttribute.match( /^(.+?)(:[/](.+)[/])?$/ )
+                            if ( m ) {
+                                if ( !m[ 2 ] )
+                                    f.title = f.properties[ m[ 1 ] ]
+                                else
+                                    try {
+                                        f.title = f.properties[ m[ 1 ] ].match( new RegExp( m[ 3 ] ) )[ 1 ]
+                                    }
+                                    catch ( e ) {
+                                        console.warn( e, m )
+                                    }
+                            }
+                        }
+
+                        if ( !f.title )
+                            f.title = 'Feature #' + ( i + 1 )
+
+                        return f
+                    } )
+
+                    return features
+                } )
+                .then( function ( features ) {
+                    if ( !lock.held() ) throw IdentifyDiscardedError()
+
+                    features.forEach( function ( f ) {
+                        f._identifyPoint = location.map
+                    } )
+                    featureSet.add( id, features )
+                } )
+                .catch( function ( err ) {
+                    console.debug( id, 'identify at point fail:', err.message )
+                    if ( err.discarded ) throw err
+                } )
+            )
+        } )
+
+        return SMK.UTIL.waitAll( promises )
+            .finally( function () {
+                if ( !lock.held() ) throw IdentifyDiscardedError()
+                if (featureSet.isEmpty()) {
+                    self.searched.pick(fid);
+                    self.searched.highlight([fid]);
+                }
+            } )
+    }
+    
     Viewer.prototype.identifyFeatures = function ( location, area ) {
         var self = this
 
