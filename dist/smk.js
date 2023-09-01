@@ -1188,6 +1188,7 @@ if ( skip ) return;
     );
     include.tag( "tool-search-leaflet",
         { loader: "group", tags: [
+            { loader: "script", url: "smk/viewer-leaflet/tool/search/tool-search-identify-leaflet.js" },
             { loader: "script", url: "smk/viewer-leaflet/tool/search/tool-search-leaflet.js" }
         ] }
     );
