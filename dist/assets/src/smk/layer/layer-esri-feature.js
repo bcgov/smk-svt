@@ -88,57 +88,56 @@ include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer'
         } )
     }
 
-    // EsriFeatureLayer.prototype.getFeaturesAtPoint = function ( location, view, option ) {
-    //     var self = this
+    EsriFeatureLayer.prototype.getFeaturesAtPoint = function ( location, view, option ) {
+        var self = this
 
-    //     var serviceUrl  = this.config.serviceUrl + '/identify'
-    //     var dynamicLayers = '[' + this.config.dynamicLayers.join( ',' ) + ']'
+        // A request ending in /0 gives a different response than the identify response we want
+        var serviceUrl  = this.config.serviceUrl.replace('/0', '') + '/identify'
 
-    //     var data = {
-    //         f:              'json',
-    //         dynamicLayers:  dynamicLayers,
-    //         sr:             4326,
-    //         tolerance:      1,
-    //         mapExtent:      view.extent.join( ',' ),
-    //         imageDisplay:   [ view.screen.width, view.screen.height, 96 ].join( ',' ),
-    //         returnGeometry: true,
-    //         returnZ:        false,
-    //         returnM:        false,
-    //         geometryType:   'esriGeometryPoint',
-    //         geometry:       location.map.longitude + ',' + location.map.latitude,
-    //         tolerance:      option.tolerance
-    //     }
+        var data = {
+            f:              'json',
+            sr:             4326,
+            tolerance:      1,
+            mapExtent:      view.extent.join( ',' ),
+            imageDisplay:   [ view.screen.width, view.screen.height, 96 ].join( ',' ),
+            returnGeometry: true,
+            returnZ:        false,
+            returnM:        false,
+            returnFieldName: true,
+            geometryType:   'esriGeometryPoint',
+            geometry:       location.coordinates[0] + ',' + location.coordinates[1]
+        }
 
-    //     return SMK.UTIL.makePromise( function ( res, rej ) {
-    //         $.ajax( {
-    //             url:            serviceUrl,
-    //             type:           'post',
-    //             data:           data,
-    //             dataType:       'json',
-    //         } ).then( res, rej )
-    //     } )
-    //     .then( function ( data ) {
-    //         if ( !data ) throw new Error( 'no features' )
-    //         if ( !data.results || data.results.length == 0 ) throw new Error( 'no features' )
+        return SMK.UTIL.makePromise( function ( res, rej ) {
+            $.ajax( {
+                url:            serviceUrl,
+                type:           'post',
+                data:           data,
+                dataType:       'json',
+            } ).then( res, rej )
+        } )
+        .then( function ( data ) {
+            if ( !data ) throw new Error( 'no features' )
+            if ( !data.results || data.results.length == 0 ) throw new Error( 'no features' )
 
-    //         return data.results.map( function ( r, i ) {
-    //             var f = {}
+            return data.results.map( function ( r, i ) {
+                var f = {}
 
-    //             if ( r.displayFieldName )
-    //                 f.title = r.attributes[ r.displayFieldName ]
+                if ( r.displayFieldName )
+                    f.title = r.attributes[ r.displayFieldName ]
 
-    //             f.geometry = Terraformer.ArcGIS.parse( r.geometry )
+                f.geometry = Terraformer.ArcGIS.parse( r.geometry )
 
-    //             if ( f.geometry.type == 'MultiPoint' && f.geometry.coordinates.length == 1 ) {
-    //                 f.geometry.type = 'Point'
-    //                 f.geometry.coordinates = f.geometry.coordinates[ 0 ]
-    //             }
+                if ( f.geometry.type == 'MultiPoint' && f.geometry.coordinates.length == 1 ) {
+                    f.geometry.type = 'Point'
+                    f.geometry.coordinates = f.geometry.coordinates[ 0 ]
+                }
 
-    //             f.properties = r.attributes
+                f.properties = r.attributes
 
-    //             return f
-    //         } )
-    //     } )
-    // }
+                return f
+            } )
+        } )
+    }
 
 } )
