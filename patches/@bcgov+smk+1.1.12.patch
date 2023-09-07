@@ -1,0 +1,909 @@
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/layer/layer-esri-feature.js b/node_modules/@bcgov/smk/dist/assets/src/smk/layer/layer-esri-feature.js
+index 264b3e4..bd4d339 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/layer/layer-esri-feature.js
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/layer/layer-esri-feature.js
+@@ -88,57 +88,56 @@ include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer'
+         } )
+     }
+ 
+-    // EsriFeatureLayer.prototype.getFeaturesAtPoint = function ( location, view, option ) {
+-    //     var self = this
+-
+-    //     var serviceUrl  = this.config.serviceUrl + '/identify'
+-    //     var dynamicLayers = '[' + this.config.dynamicLayers.join( ',' ) + ']'
+-
+-    //     var data = {
+-    //         f:              'json',
+-    //         dynamicLayers:  dynamicLayers,
+-    //         sr:             4326,
+-    //         tolerance:      1,
+-    //         mapExtent:      view.extent.join( ',' ),
+-    //         imageDisplay:   [ view.screen.width, view.screen.height, 96 ].join( ',' ),
+-    //         returnGeometry: true,
+-    //         returnZ:        false,
+-    //         returnM:        false,
+-    //         geometryType:   'esriGeometryPoint',
+-    //         geometry:       location.map.longitude + ',' + location.map.latitude,
+-    //         tolerance:      option.tolerance
+-    //     }
+-
+-    //     return SMK.UTIL.makePromise( function ( res, rej ) {
+-    //         $.ajax( {
+-    //             url:            serviceUrl,
+-    //             type:           'post',
+-    //             data:           data,
+-    //             dataType:       'json',
+-    //         } ).then( res, rej )
+-    //     } )
+-    //     .then( function ( data ) {
+-    //         if ( !data ) throw new Error( 'no features' )
+-    //         if ( !data.results || data.results.length == 0 ) throw new Error( 'no features' )
+-
+-    //         return data.results.map( function ( r, i ) {
+-    //             var f = {}
+-
+-    //             if ( r.displayFieldName )
+-    //                 f.title = r.attributes[ r.displayFieldName ]
+-
+-    //             f.geometry = Terraformer.ArcGIS.parse( r.geometry )
+-
+-    //             if ( f.geometry.type == 'MultiPoint' && f.geometry.coordinates.length == 1 ) {
+-    //                 f.geometry.type = 'Point'
+-    //                 f.geometry.coordinates = f.geometry.coordinates[ 0 ]
+-    //             }
+-
+-    //             f.properties = r.attributes
+-
+-    //             return f
+-    //         } )
+-    //     } )
+-    // }
++    EsriFeatureLayer.prototype.getFeaturesAtPoint = function ( location, view, option ) {
++        var self = this
++
++        // A request ending in /0 gives a different response than the identify response we want
++        var serviceUrl  = this.config.serviceUrl.replace('/0', '') + '/identify'
++
++        var data = {
++            f:              'json',
++            sr:             4326,
++            tolerance:      1,
++            mapExtent:      view.extent.join( ',' ),
++            imageDisplay:   [ view.screen.width, view.screen.height, 96 ].join( ',' ),
++            returnGeometry: true,
++            returnZ:        false,
++            returnM:        false,
++            returnFieldName: true,
++            geometryType:   'esriGeometryPoint',
++            geometry:       location.coordinates[0] + ',' + location.coordinates[1]
++        }
++
++        return SMK.UTIL.makePromise( function ( res, rej ) {
++            $.ajax( {
++                url:            serviceUrl,
++                type:           'post',
++                data:           data,
++                dataType:       'json',
++            } ).then( res, rej )
++        } )
++        .then( function ( data ) {
++            if ( !data ) throw new Error( 'no features' )
++            if ( !data.results || data.results.length == 0 ) throw new Error( 'no features' )
++
++            return data.results.map( function ( r, i ) {
++                var f = {}
++
++                if ( r.displayFieldName )
++                    f.title = r.attributes[ r.displayFieldName ]
++
++                f.geometry = Terraformer.ArcGIS.parse( r.geometry )
++
++                if ( f.geometry.type == 'MultiPoint' && f.geometry.coordinates.length == 1 ) {
++                    f.geometry.type = 'Point'
++                    f.geometry.coordinates = f.geometry.coordinates[ 0 ]
++                }
++
++                f.properties = r.attributes
++
++                return f
++            } )
++        } )
++    }
+ 
+ } )
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/identify/panel-identify.html b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/identify/panel-identify.html
+index b45b302..7b1447f 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/identify/panel-identify.html
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/identify/panel-identify.html
+@@ -50,4 +50,9 @@
+     <div v-if="layers.length == 0">
+         Click on the map to identify features under the clicked point.
+     </div>
++
++    <div v-if="hasSearchResults === false">
++        <hr>
++        {{ noResultsMessage }}
++    </div>
+ </tool-panel>
+\ No newline at end of file
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/identify/tool-identify-list.js b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/identify/tool-identify-list.js
+index d2ce194..25632fd 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/identify/tool-identify-list.js
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/identify/tool-identify-list.js
+@@ -17,7 +17,7 @@ include.module( 'tool-identify.tool-identify-list-js', [
+     Vue.component( 'identify-panel', {
+         extends: SMK.COMPONENT.ToolPanelBase,
+         template: inc[ 'tool-identify.panel-identify-html' ],
+-        props: [ 'tool', 'layers', 'highlightId', 'command', 'radius', 'radiusUnit' ],
++        props: [ 'tool', 'layers', 'highlightId', 'command', 'radius', 'radiusUnit', 'hasSearchResults', 'noResultsMessage' ],
+         methods: {
+             formatNumber: function ( value, fractionPlaces ) {
+                 var i = Math.floor( value ),
+@@ -40,8 +40,11 @@ include.module( 'tool-identify.tool-identify-list-js', [
+             this.defineProp( 'command' )
+             this.defineProp( 'radius' )
+             this.defineProp( 'radiusUnit' )
++            this.defineProp( 'hasSearchResults' )
++            this.defineProp( 'noResultsMessage' )
+ 
+             this.tool = {}
++            this.hasSearchResults = undefined
+         },
+ 
+         initialize: function ( smk ) {
+@@ -49,6 +52,9 @@ include.module( 'tool-identify.tool-identify-list-js', [
+ 
+             this.tool = smk.getToolTypesAvailable()
+ 
++            var defaultNoResultsMessage = 'No features found'
++            this.noResultsMessage = this.noResultsMessage || defaultNoResultsMessage
++
+             this.changedGroup( function () {
+                 if ( self.group ) {
+                     self.displaySearchArea()
+@@ -82,6 +88,7 @@ include.module( 'tool-identify.tool-identify-list-js', [
+                 }
+                 else {
+                     SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
++                    self.hasSearchResults = undefined
+                 }
+             } )
+ 
+@@ -140,12 +147,19 @@ include.module( 'tool-identify.tool-identify-list-js', [
+                         self.busy = false
+ 
+                         if ( smk.$viewer.identified.isEmpty() ) {
+-                            smk.$sidepanel.setExpand( 0 )
+-                            self.setInternalLayerVisible( false )
+-                            self.showStatusMessage( 'No features found', 'warning' )
++                            if (self.showPanel) {
++                                self.hasSearchResults = false
++                                self.setInternalLayerVisible( false )
++                                self.clearStatusMessage()
++                            } else {
++                                smk.$sidepanel.setExpand( 0 )
++                                self.setInternalLayerVisible( false )
++                                self.showStatusMessage( self.noResultsMessage, 'warning' )
++                            }
+                         }
+                         else {
+                             self.active = true
++                            self.hasSearchResults = true
+ 
+                             var stat = smk.$viewer.identified.getStats()
+                             var sub = SMK.UTIL.grammaticalNumber( stat.layerCount, null, null, 'on {} layers' )
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/config/tool-search-config.js b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/config/tool-search-config.js
+index 0a6864d..0a6abad 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/config/tool-search-config.js
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/config/tool-search-config.js
+@@ -2,19 +2,21 @@ include.module( 'tool-search-config', [
+     'tool-config.tool-base-config-js',
+     'tool-config.tool-widget-config-js',
+     'tool-config.tool-panel-config-js',
++    'tool-config.tool-panel-feature-config-js',
+ ], function ( inc ) {
+     "use strict";
+ 
+     SMK.CONFIG.tools.push(
+         inc[ 'tool-config.tool-base-config-js' ](
+         inc[ 'tool-config.tool-widget-config-js' ](
+-        inc[ 'tool-config.tool-panel-config-js' ]( {
++        inc[ 'tool-config.tool-panel-config-js' ]( 
++        inc[ 'tool-config.tool-panel-feature-config-js']( {
+             type: 'search',
+             enabled: true,
+             order: 2,
+             position: 'toolbar',
+             icon: 'search',
+-            title: 'Search for Location',
++            title: 'Search by Address or Location',
+             showPanel: true,
+             showLocation: true,
+             command: {
+@@ -22,6 +24,6 @@ include.module( 'tool-search-config', [
+                 measure: true,
+                 directions: true,
+             }
+-        } ) ) )
++        } ) ) ) )
+     )
+ } )
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/panel-search-identify.html b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/panel-search-identify.html
+new file mode 100644
+index 0000000..708dff4
+--- /dev/null
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/panel-search-identify.html
+@@ -0,0 +1,20 @@
++<tool-panel class="smk-search-identify-panel"
++    v-bind="$$projectProps( 'tool-panel' )"
++    v-bind:layers="layers"
++    v-bind:searchHighlightId="searchHighlightId"
++>
++    <template slot="header">
++        <slot></slot>
++    </template>
++
++    <feature-list
++        v-bind:layers="layers"
++        v-bind:highlightId="searchHighlightId"
++        v-on:active="$$emit( 'active', $event )"
++        v-on:hover="$$emit( 'hover', $event )"
++    ></feature-list>
++
++    <div v-if="!layers || !layers.length">
++        No speculation and vacancy tax applies at this location.
++    </div>
++</tool-panel>
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-identify-feature.js b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-identify-feature.js
+new file mode 100644
+index 0000000..492c1e9
+--- /dev/null
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-identify-feature.js
+@@ -0,0 +1,94 @@
++include.module( 'tool-search.tool-search-identify-feature-js', [
++    'tool.tool-feature-list-js',
++    'component-tool-panel-feature',
++    'tool.tool-panel-feature-js'
++ ], function ( inc ) {
++    "use strict";
++
++    return SMK.TYPE.Tool.define( 'SearchIdentifyFeatureTool',
++        function () {
++            SMK.TYPE.ToolPanel.call( this, 'tool-panel-feature' )
++            SMK.TYPE.ToolFeatureList.call( this, function ( smk ) { return smk.$viewer.searchedIdentified } )
++            SMK.TYPE.ToolPanelFeature.call( this, function ( smk ) { return smk.$viewer.searchedIdentified } )
++
++            this.parentId = 'SearchIdentifyTool'
++        },
++        function ( smk ) {
++            var self = this
++
++            var featureIds
++
++            self.changedActive( function () {
++                if ( !self.active ) {
++                    self.featureSet.highlight()
++                    self.featureSet.pick()
++                    smk.$viewer.searched.pick( null )
++                }
++            } )
++
++            smk.on( this.id, {
++                'zoom': function () {
++                    self.featureSet.zoomTo( featureIds[ self.resultPosition ] )
++                },
++                'select': function () {
++                    var f = self.featureSet.get( featureIds[ self.resultPosition ] )
++                    smk.$viewer.selected.add( f.layerId, [ f ] )
++                },
++                'move-previous': function () {
++                    self.featureSet.pick( featureIds[ ( self.resultPosition + self.resultCount - 1 ) % self.resultCount ] )
++                },
++                'move-next': function () {
++                    self.featureSet.pick( featureIds[ ( self.resultPosition + 1 ) % self.resultCount ] )
++                },
++            } )
++
++            self.featureSet.addedFeatures( function ( ev ) {
++                self.resultCount = self.featureSet.getStats().featureCount
++
++                featureIds =  Object.keys( self.featureSet.featureSet )
++            } )
++
++            self.featureSet.clearedFeatures( function ( ev ) {
++                self.resultCount = 0
++            } )
++
++            self.featureSet.pickedFeature( function ( ev ) {
++                if ( !ev.feature ) {
++                    self.feature = null
++                    self.layer = null
++                    return
++                }
++
++                self.active = true
++                var fids = Object.keys( self.featureSet.featureSet )
++
++                var ly = smk.$viewer.layerId[ ev.feature.layerId ]
++                self.layer = {
++                    id:         ev.feature.layerId,
++                    title:      ly.config.title,
++                    attributes: ly.config.attributes && ly.config.attributes.map( function ( at ) {
++                        return {
++                            visible:at.visible,
++                            title:  at.title,
++                            name:   at.name,
++                            format: at.format,
++                            value:  at.value
++                        }
++                    } )
++                }
++
++                self.feature = {
++                    id:         ev.feature.id,
++                    title:      ev.feature.title,
++                    properties: Object.assign( {}, ev.feature.properties )
++                }
++
++                self.setAttributeComponent( ly, ev.feature )
++
++                self.resultPosition = fids.indexOf( ev.feature.id )
++
++                self.featureSet.zoomTo( ev.feature.id )
++            } )
++        }
++    )
++} )
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-identify.js b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-identify.js
+new file mode 100644
+index 0000000..7a07e0a
+--- /dev/null
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-identify.js
+@@ -0,0 +1,56 @@
++include.module( 'tool-search.tool-search-identify-js', [
++    'tool.tool-panel-js',
++    'tool.tool-feature-list-js',
++    'component-feature-list',
++    'tool-search.panel-search-identify-html',
++    'tool-search.location-title-html',
++    'tool-search.location-address-html'
++], function ( inc ) {
++    "use strict";
++
++    Vue.component( 'search-identify-panel', {
++        extends: SMK.COMPONENT.ToolPanelBase,
++        template: inc[ 'tool-search.panel-search-identify-html' ],
++        props: [ 'feature', 'tool', 'command', 'locationComponent', 'layers', 'searchHighlightId' ]
++    } )
++    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
++    //
++    return SMK.TYPE.Tool.define( 'SearchIdentifyTool',
++        function () {
++            SMK.TYPE.ToolPanel.call( this, 'search-identify-panel' )
++            SMK.TYPE.ToolFeatureList.call( this, function ( smk ) { return smk.$viewer.searchedIdentified } )
++            SMK.TYPE.ToolPanelFeature.call( this, function ( smk ) { return smk.$viewer.searchedIdentified } )
++
++            this.defineProp( 'locationComponent' )
++            this.defineProp( 'searchHighlightId' )
++
++            this.locationComponent = {}
++            this.parentId = 'SearchListTool'
++        },
++        function ( smk ) {
++            var self = this
++
++            var featureIds
++
++            this.tool = smk.getToolTypesAvailable()
++
++            smk.getToolById( 'SearchListTool' ).startedSearchIdentify( function () {
++                self.active = true;
++            } )
++
++            self.featureSet.addedFeatures( function ( ev ) {
++                self.resultCount = self.featureSet.getStats().featureCount
++
++                featureIds =  Object.keys( self.featureSet.featureSet )
++
++                if ( featureIds && featureIds.length )
++                    self.featureSet.pick( featureIds[0] )
++
++            } )
++
++            self.featureSet.clearedFeatures( function ( ev ) {
++                self.resultCount = 0
++            } )
++        }
++    )
++} )
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-list.js b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-list.js
+index cb4025a..89c745f 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-list.js
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-list.js
+@@ -116,8 +116,8 @@ include.module( 'tool-search.tool-search-list-js', [
+     } )
+     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+     //
+-    return SMK.TYPE.Tool.define( 'SearchListTool',
+-        function () {
++    return SMK.TYPE.Tool.define( 'SearchListTool', {
++        construct: function () {
+             SMK.TYPE.ToolWidget.call( this, 'search-widget' )
+             SMK.TYPE.ToolPanel.call( this, 'search-panel' )
+ 
+@@ -127,18 +127,11 @@ include.module( 'tool-search.tool-search-list-js', [
+ 
+             this.results = []
+         },
+-        function ( smk ) {
++        initialize: function ( smk ) {
+             var self = this
+ 
+             smk.$container.classList.add( 'smk-tool-search' )
+ 
+-            this.changedActive( function () {
+-                if ( self.active )
+-                    SMK.HANDLER.get( self.id, 'activated' )( smk, self )
+-                else
+-                    SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
+-            } )
+-    
+             smk.on( this.id, {
+                 'activate': function ( ev ) {
+                     if ( !ev.toggle )
+@@ -149,7 +142,6 @@ include.module( 'tool-search.tool-search-list-js', [
+                     smk.$viewer.searched.clear()
+ 
+                     self.busy = true
+-                    //self.title = 'Locations matching <wbr>"' + ev.text + '"'
+                     doAddressSearch( ev.text )
+                         .then( function ( features ) {
+                             self.active = true
+@@ -166,11 +158,20 @@ include.module( 'tool-search.tool-search-list-js', [
+                 },
+ 
+                 'pick': function ( ev ) {
+-                    smk.$viewer.searched.pick( null )
+-                    smk.$viewer.searched.pick( ev.result.id )
+-                    if ( !self.showPanel ) {
+-                        self.active = false
+-                        self.initialSearch = ev.result.title
++                    // If identify = true (from smk-config.json), we want to trigger an identify operation at the selected address/location
++                    if (self.identify ) {
++                        self.startedSearchIdentify()
++                        smk.$viewer.identifyFeaturesAtPoint(ev.result.geometry, smk.$viewer.searchedIdentified, ev.result.id)
++                        smk.$viewer.searched.highlight( null )
++                        smk.$viewer.searched.pick( null )
++                        smk.$viewer.searched.pick( ev.result.id )
++                    } else {
++                        smk.$viewer.searched.pick( null )
++                        smk.$viewer.searched.pick( ev.result.id )
++                        if ( !self.showPanel ) {
++                            self.active = false
++                            self.initialSearch = ev.result.title
++                        }
+                     } 
+                 },
+ 
+@@ -189,20 +190,19 @@ include.module( 'tool-search.tool-search-list-js', [
+                 self.results = ev.features
+             } )
+ 
+-            // // smk.$viewer.selected.removedFeatures( function ( ev ) {
+-            // // } )
+-
+             smk.$viewer.searched.pickedFeature( function ( ev ) {
+-                self.highlightId = ev.feature && ev.feature.id
++                if (!self.identify) {
++                    self.highlightId = ev.feature && ev.feature.id
++                }
+             } )
+ 
+-            // // smk.$viewer.selected.highlightedFeatures( function ( ev ) {
+-            // // } )
+-
+             smk.$viewer.searched.clearedFeatures( function ( ev ) {
+                 self.results = []
+             } )
+-        }
+-    )
++        },
++        events: [
++            'startedSearchIdentify'
++        ]
++    } )
+ } )
+ 
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-location.js b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-location.js
+index 0b545cf..da7b7cd 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-location.js
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-location.js
+@@ -43,27 +43,30 @@ include.module( 'tool-search.tool-search-location-js', [
+             } )
+ 
+             smk.$viewer.searched.pickedFeature( function ( ev ) {
+-                self.locationComponent = {
+-                    name: 'location',
+-                    template: inc[ 'tool-search.location-address-html' ],
+-                    data: function () {
+-                        return {
+-                            feature: ev.feature
++                if (!self.identify) {
++                    self.locationComponent = {
++                        name: 'location',
++                        template: inc[ 'tool-search.location-address-html' ],
++                        data: function () {
++                            return {
++                                feature: ev.feature
++                            }
+                         }
+                     }
+-                }
+     
+-                self.titleComp = {
+-                    name: 'location-title',
+-                    template: inc[ 'tool-search.location-title-html' ],
+-                    data: function () {
+-                        return Object.assign( { intersectionName: null }, ev.feature.properties )
++                    self.titleComp = {
++                        name: 'location-title',
++                        template: inc[ 'tool-search.location-title-html' ],
++                        data: function () {
++                            return Object.assign( { intersectionName: null }, ev.feature.properties )
++                        }
+                     }
+-                }
+     
+-                if ( ev.feature && self.showLocation ) {
+-                    self.active = true
++                    if ( ev.feature && self.showLocation ) {
++                        self.active = true
++                    }
+                 }
++
+             } )
+         }
+     )
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search.js b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search.js
+index 4376f53..f143cff 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search.js
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search.js
+@@ -1,11 +1,15 @@
+ include.module( 'tool-search', [
+     'tool-search.tool-search-list-js',
+     'tool-search.tool-search-location-js',
++    'tool-search.tool-search-identify-js',
++    'tool-search.tool-search-identify-feature-js'
+ ], function ( inc ) {
+     "use strict";
+ 
+     return SMK.TYPE.Tool.defineComposite( [
+         inc[ 'tool-search.tool-search-list-js' ],
+-        inc[ 'tool-search.tool-search-location-js' ]
++        inc[ 'tool-search.tool-search-location-js' ],
++        inc[ 'tool-search.tool-search-identify-js' ],
++        inc[ 'tool-search.tool-search-identify-feature-js' ]
+     ] )
+ } )
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/widget-search.html b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/widget-search.html
+index 22c1201..dcd7003 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/widget-search.html
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/widget-search.html
+@@ -1,7 +1,7 @@
+ <div class="smk-tool" ref="widget"
+     v-bind:class="classes" 
+ >
+-    <input type="text" placeholder="Search for location" ref="search-input"
++    <input type="text" placeholder="Search by address or location" ref="search-input"
+         v-model.trim="search"
+         v-on:keyup="$$emit( 'input-change', { text: search } )"
+         v-on:click="$$emit( 'activate', {} )"
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/tool-base.js b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/tool-base.js
+index 6576e0b..c3634e9 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/tool-base.js
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/tool-base.js
+@@ -126,6 +126,10 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
+                 return smk.getStatusMessage().show( message, status, delay, this.busy )
+             }
+ 
++            this.clearStatusMessage = function () {
++                smk.getStatusMessage().clear()
++            }
++
+             this.setDefaultDrawStyle = function() {
+                 smk.$viewer.map.pm.setGlobalOptions({ 
+                     templineStyle: { 
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-vector-leaflet.js b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-vector-leaflet.js
+index 268ed5a..3cc0b89 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-vector-leaflet.js
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-vector-leaflet.js
+@@ -65,38 +65,15 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
+ 
+         if ( !option.layer ) return
+ 
++        if (location.type !== "Point") return
++
+         var features = []
+-        var test = [ location.map.longitude, location.map.latitude ]
+-        var toleranceKm = option.tolerance * view.metersPerPixel / 1000;
++        var test = [ location.coordinates[0], location.coordinates[1] ]
+ 
+         option.layer.eachLayer( function ( ly ) {
+             var ft = ly.toGeoJSON()
+-
+-            switch ( ft.geometry.type ) {
+-            case 'Polygon':
+-            case 'MultiPolygon':
+-                if ( turf.booleanPointInPolygon( test, ft ) ) features.push( ft )
+-                break
+-
+-            case 'LineString':
+-            case 'MultiLineString':
+-                var close1 = turf.segmentReduce( ft, function ( accum, segment ) {
+-                    return accum || turf.pointToLineDistance( test, segment ) < toleranceKm
+-                }, false )
+-                if ( close1 ) features.push( ft )
+-                break
+-
+-            case 'Point':
+-            case 'MultiPoint':
+-                var close2 = turf.coordReduce( ft, function ( accum, coord ) {
+-                    return accum || turf.distance( coord, test ) < toleranceKm
+-                }, false )
+-                if ( close2 ) features.push( ft )
+-                break
+-
+-            default:
+-                console.warn( 'skip', ft.geometry.type )
+-            }
++            var result = turf.booleanPointInPolygon(test, ft);
++            if ( result ) features.push( ft )
+         } )
+ 
+         return features
+@@ -251,6 +228,8 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
+                 .then( function ( layer ) {
+                     if ( !layers[ 0 ].config.useClustering ) return layer
+                     
++                    layer.maxZoom = 19;
++
+                     // var cluster = L.markerClusterGroup( self.clusterOption )
+                     var cluster = L.markerClusterGroup( clusterOptions( layers[ 0 ].config, self ) )
+                     cluster.addLayers( [ layer ] )
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/tool/search/tool-search-identify-leaflet.js b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/tool/search/tool-search-identify-leaflet.js
+new file mode 100644
+index 0000000..1b08b55
+--- /dev/null
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/tool/search/tool-search-identify-leaflet.js
+@@ -0,0 +1,12 @@
++include.module( 'tool-search-identify-leaflet', [
++    'leaflet',
++    'tool-identify',
++    'tool-leaflet',
++    'tool-leaflet.tool-feature-list-leaflet-js'
++], function ( inc ) {
++    "use strict";
++
++    SMK.TYPE.SearchIdentifyTool.addInitializer( function ( smk ) {
++        inc[ 'tool-leaflet.tool-feature-list-leaflet-js' ].call( this, smk )
++    } )
++} )
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/tool/search/tool-search-leaflet.js b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/tool/search/tool-search-leaflet.js
+index 1a6f062..3857328 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/tool/search/tool-search-leaflet.js
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/tool/search/tool-search-leaflet.js
+@@ -4,6 +4,8 @@ include.module( 'tool-search-leaflet', [
+     'tool-search.marker-icon-yellow-png',
+     'tool-search.marker-shadow-png',
+     'tool-search.star-icon-yellow-png',
++    'tool-leaflet',
++    'tool-leaflet.tool-feature-list-leaflet-js'
+ ], function ( inc ) {
+     "use strict";
+ 
+@@ -42,6 +44,10 @@ include.module( 'tool-search-leaflet', [
+         shadowSize:     [ 31, 31 ]
+     } )
+ 
++    SMK.TYPE.SearchIdentifyFeatureTool.addInitializer( function  ( smk ) {
++        inc[ 'tool-leaflet.tool-feature-list-leaflet-js' ].call( this, smk )
++    })
++
+     SMK.TYPE.SearchListTool.addInitializer( function ( smk ) {
+         var self = this
+ 
+@@ -49,19 +55,23 @@ include.module( 'tool-search-leaflet', [
+ 
+         var searchMarkers = L.featureGroup( { pane: 'markerPane' } )
+         var pickedMarker = L.featureGroup( { pane: 'markerPane' } )
++        var identifyMarker = L.featureGroup({ pane: 'markerPane' })
+ 
+         self.changedGroup( function () {
+             self.visible = self.group
+         } )
+ 
+         self.changedVisible( function () {
++            identifyMarker.clearLayers()
+             if ( self.visible ) {
+                 vw.map.addLayer( searchMarkers )
+                 vw.map.removeLayer( pickedMarker )
++                vw.map.addLayer( identifyMarker )
+             }
+             else {
+                 vw.map.removeLayer( searchMarkers )
+                 vw.map.addLayer( pickedMarker )
++                vw.map.removeLayer( identifyMarker )
+             }
+         } )
+ 
+@@ -103,16 +113,25 @@ include.module( 'tool-search-leaflet', [
+         } )
+ 
+         vw.searched.pickedFeature( function ( ev ) {
+-            if ( ev.was ) {
+-                var ly1 = ev.was.highlightLayer
+-                brightHighlight( ly1, vw.searched.isHighlighted( ev.was.id ), false )
+-            }
+-
+-            if ( ev.feature ) {
+-                brightHighlight( ev.feature.highlightLayer, true, true, ev.feature )
+-
+-                pickedMarker.clearLayers()
+-                pickedMarker.addLayer( ev.feature.pickMarker )
++            if (self.identify) {
++                identifyMarker.clearLayers()
++
++                if (ev.feature && ev.feature.pickMarker) {
++                    vw.map.removeLayer(searchMarkers)
++                    identifyMarker.addLayer(ev.feature.pickMarker)
++                }
++            } else {
++                if ( ev.was ) {
++                    var ly1 = ev.was.highlightLayer
++                    brightHighlight( ly1, vw.searched.isHighlighted( ev.was.id ), false )
++                }
++    
++                if ( ev.feature ) {
++                    brightHighlight( ev.feature.highlightLayer, true, true, ev.feature )
++    
++                    pickedMarker.clearLayers()
++                    pickedMarker.addLayer( ev.feature.pickMarker )
++                }
+             }
+         } )
+ 
+diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer.js b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer.js
+index 1b8ef09..e367192 100644
+--- a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer.js
++++ b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer.js
+@@ -130,6 +130,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
+         this.identified = new SMK.TYPE.FeatureSet()
+         this.selected = new SMK.TYPE.FeatureSet()
+         this.searched = new SMK.TYPE.FeatureSet()
++        this.searchedIdentified = new SMK.TYPE.FeatureSet();
+         this.queried = {} // new SMK.TYPE.FeatureSet()
+ 
+         this.layerIds = []
+@@ -574,6 +575,96 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
+         ] )
+     }
+ 
++    Viewer.prototype.identifyFeaturesAtPoint = function ( location, featureSet, fid ) {
++        var self = this
++
++        var view = this.getView()
++
++        featureSet.clear()
++
++        var lock = this.acquireIdentifyMutex()
++
++        if ( !location ) return
++
++        function IdentifyDiscardedError() {
++            var e = Error( 'Identify at point results discarded' )
++            e.discarded = true
++            return e
++        }
++
++        var promises = []
++        this.layerIds.forEach( function ( id, i ) {
++            var ly = self.layerId[ id ]
++
++            if ( !self.isDisplayContextItemVisible( id ) ) return
++            if ( ly.config.isQueryable === false ) return
++            if ( !ly.inScaleRange( view ) ) return
++
++            var option = {
++                layer: self.visibleLayer[ id ]
++            }
++
++            var p = ly.getFeaturesAtPoint( location, view, option )
++            if ( !p ) return
++
++            promises.push(
++                SMK.UTIL.resolved().then( function () {
++                    if ( !lock.held() ) throw IdentifyDiscardedError()
++
++                    return p
++                } )
++                .then( function ( features ) {
++                    if ( !lock.held() ) throw IdentifyDiscardedError()
++
++                    features.forEach( function ( f, i ) {
++                        if ( ly.config.titleAttribute ) {
++                            var m = ly.config.titleAttribute.match( /^(.+?)(:[/](.+)[/])?$/ )
++                            if ( m ) {
++                                if ( !m[ 2 ] )
++                                    f.title = f.properties[ m[ 1 ] ]
++                                else
++                                    try {
++                                        f.title = f.properties[ m[ 1 ] ].match( new RegExp( m[ 3 ] ) )[ 1 ]
++                                    }
++                                    catch ( e ) {
++                                        console.warn( e, m )
++                                    }
++                            }
++                        }
++
++                        if ( !f.title )
++                            f.title = 'Feature #' + ( i + 1 )
++
++                        return f
++                    } )
++
++                    return features
++                } )
++                .then( function ( features ) {
++                    if ( !lock.held() ) throw IdentifyDiscardedError()
++
++                    features.forEach( function ( f ) {
++                        f._identifyPoint = location.map
++                    } )
++                    featureSet.add( id, features )
++                } )
++                .catch( function ( err ) {
++                    console.debug( id, 'identify at point fail:', err.message )
++                    if ( err.discarded ) throw err
++                } )
++            )
++        } )
++
++        return SMK.UTIL.waitAll( promises )
++            .finally( function () {
++                if ( !lock.held() ) throw IdentifyDiscardedError()
++                if (featureSet.isEmpty()) {
++                    self.searched.pick(fid);
++                    self.searched.highlight([fid]);
++                }
++            } )
++    }
++    
+     Viewer.prototype.identifyFeatures = function ( location, area ) {
+         var self = this
+ 
+diff --git a/node_modules/@bcgov/smk/dist/smk.js b/node_modules/@bcgov/smk/dist/smk.js
+index 5cb507a..ae010aa 100644
+--- a/node_modules/@bcgov/smk/dist/smk.js
++++ b/node_modules/@bcgov/smk/dist/smk.js
+@@ -1162,10 +1162,13 @@ if ( skip ) return;
+             { loader: "template", url: "smk/tool/search/location-title.html" },
+             { loader: "asset", url: "smk/tool/search/marker-icon-yellow.png" },
+             { loader: "asset", url: "smk/tool/search/marker-shadow.png" },
++            { loader: "template", url: "smk/tool/search/panel-search-identify.html" },
+             { loader: "template", url: "smk/tool/search/panel-search-location.html" },
+             { loader: "template", url: "smk/tool/search/panel-search.html" },
+             { loader: "template", url: "smk/tool/search/popup-search.html" },
+             { loader: "asset", url: "smk/tool/search/star-icon-yellow.png" },
++            { loader: "script", url: "smk/tool/search/tool-search-identify-feature.js" },
++            { loader: "script", url: "smk/tool/search/tool-search-identify.js" },
+             { loader: "script", url: "smk/tool/search/tool-search-list.js" },
+             { loader: "script", url: "smk/tool/search/tool-search-location.js" },
+             { loader: "style", url: "smk/tool/search/tool-search.css" },
+@@ -1185,6 +1188,7 @@ if ( skip ) return;
+     );
+     include.tag( "tool-search-leaflet",
+         { loader: "group", tags: [
++            { loader: "script", url: "smk/viewer-leaflet/tool/search/tool-search-identify-leaflet.js" },
+             { loader: "script", url: "smk/viewer-leaflet/tool/search/tool-search-leaflet.js" }
+         ] }
+     );
