@@ -5,6 +5,7 @@ FROM node:alpine3.12 AS BUILD_IMAGE
 #RUN ls -la / &&  ls -la /srv && mkdir /srv
 WORKDIR /srv
 COPY ["package.json", "package-lock.json", "./"]
+ADD patches /srv/patches 
 
 # the package.json file is automatically created, Getting people
 # who are creating an SMK app may not have the skills to properly
@@ -21,7 +22,7 @@ WORKDIR /srv
 # needed assets needs to be copied as a directory, don't see a way 
 # around having these two layers as when add assets to the copy command
 # it does not create the directory
-ADD  assets /srv/assets
+ADD assets /srv/assets
 COPY ["index.html", "smk-config.json", "smk-init.js", "/srv/"]
 COPY --from=BUILD_IMAGE /srv/node_modules /srv/node_modules
 

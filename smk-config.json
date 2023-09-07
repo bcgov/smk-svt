@@ -636,6 +636,7 @@
             "enabled": true,
             "showPanel": true,
             "showWidget": true,
+            "noResultsMessage": "No Speculation and Vacancy Tax applies at this location.",
             "style": {
                 "strokeWidth": 1,
                 "strokeStyle": "1, 1",
@@ -655,7 +656,8 @@
         },
         {
             "type": "search",
-            "enabled": true
+            "enabled": true,
+            "identify": true
         },
         {
             "type": "coordinate",
