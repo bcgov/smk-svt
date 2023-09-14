@@ -53,5 +53,5 @@ jobs:
         GHCR_USER: ${{ secrets.GHCR_USER }}
         GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
         DOCKER_REGISTRY: 'docker.pkg.github.com'
-        PR_REVIEWERS: '["michaelpnelson", "rustyjux"]'
-        PR_MENTIONS: '["michaelpnelson", "rustyjux"]'
+        PR_REVIEWERS: '["michaelpnelson"]'
+        PR_MENTIONS: '["michaelpnelson"]'
