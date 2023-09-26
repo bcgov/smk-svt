@@ -528,7 +528,7 @@
             "attributes": [
                 {
                     "name": "SVT",
-                    "title": "SVT Applies",
+                    "title": "SVT Area",
                     "visible": true
                 },
                 {
@@ -549,13 +549,13 @@
                 {
                     "name": "SOURCE",
                     "title": "Source",
-                    "visible": true
+                    "visible": false
                 },
                 {
                     "name": "AQUISITION_DATE",
                     "title": "Acquisition Date",
                     "format": "asLocalTimestamp",
-                    "visible": true
+                    "visible": false
                 }
             ]
         }
