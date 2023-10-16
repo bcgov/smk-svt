@@ -89,7 +89,7 @@
             "enabled": true,
             "title": "About Speculation and Vacancy Tax (SVT) Location Map",
             "position": "list-menu",
-            "content": "<p>Use this to find the Speculation and Vacancy Tax boundaries for locations in British Columbia.</p>"
+            "content": "<p>Use this to find the Speculation and Vacancy Tax boundaries for locations in British Columbia.</p><p>For help, visit <a href=\"https://www2.gov.bc.ca/gov/content/taxes/speculation-vacancy-tax/help\">Get help with the speculation and vacancy tax</a>.</p>"
         },
         {
             "order": 3,
