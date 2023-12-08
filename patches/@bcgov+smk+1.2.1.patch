@@ -417,7 +417,7 @@ index 0000000..7a07e0a
 +    )
 +} )
 diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-list.js b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-list.js
-index cb4025a..89c745f 100644
+index cb4025a..ca72641 100644
 --- a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-list.js
 +++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-list.js
 @@ -116,8 +116,8 @@ include.module( 'tool-search.tool-search-list-js', [
@@ -482,7 +482,7 @@ index cb4025a..89c745f 100644
 +                            self.active = false
 +                            self.initialSearch = ev.result.title
 +                        }
-                     } 
+                     }
                  },
  
 @@ -189,20 +190,19 @@ include.module( 'tool-search.tool-search-list-js', [
@@ -515,7 +515,7 @@ index cb4025a..89c745f 100644
  } )
  
 diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-location.js b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-location.js
-index 0b545cf..da7b7cd 100644
+index 0b545cf..457a9cc 100644
 --- a/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-location.js
 +++ b/node_modules/@bcgov/smk/dist/assets/src/smk/tool/search/tool-search-location.js
 @@ -43,27 +43,30 @@ include.module( 'tool-search.tool-search-location-js', [
@@ -539,7 +539,7 @@ index 0b545cf..da7b7cd 100644
                          }
                      }
 -                }
-     
+ 
 -                self.titleComp = {
 -                    name: 'location-title',
 -                    template: inc[ 'tool-search.location-title-html' ],
@@ -553,7 +553,7 @@ index 0b545cf..da7b7cd 100644
 +                        }
                      }
 -                }
-     
+ 
 -                if ( ev.feature && self.showLocation ) {
 -                    self.active = true
 +                    if ( ev.feature && self.showLocation ) {
@@ -614,7 +614,7 @@ index 6576e0b..c3634e9 100644
                  smk.$viewer.map.pm.setGlobalOptions({ 
                      templineStyle: { 
 diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-vector-leaflet.js b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-vector-leaflet.js
-index 268ed5a..3cc0b89 100644
+index 268ed5a..4f21434 100644
 --- a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-vector-leaflet.js
 +++ b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer-leaflet/layer/layer-vector-leaflet.js
 @@ -65,38 +65,15 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
@@ -664,7 +664,7 @@ index 268ed5a..3cc0b89 100644
 @@ -251,6 +228,8 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                  .then( function ( layer ) {
                      if ( !layers[ 0 ].config.useClustering ) return layer
-                     
+ 
 +                    layer.maxZoom = 19;
 +
                      // var cluster = L.markerClusterGroup( self.clusterOption )
@@ -773,10 +773,10 @@ index 1a6f062..3857328 100644
          } )
  
 diff --git a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer.js b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer.js
-index 1b8ef09..e367192 100644
+index da9be9b..ece9263 100644
 --- a/node_modules/@bcgov/smk/dist/assets/src/smk/viewer.js
 +++ b/node_modules/@bcgov/smk/dist/assets/src/smk/viewer.js
-@@ -130,6 +130,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
+@@ -136,6 +136,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
          this.identified = new SMK.TYPE.FeatureSet()
          this.selected = new SMK.TYPE.FeatureSet()
          this.searched = new SMK.TYPE.FeatureSet()
@@ -784,7 +784,7 @@ index 1b8ef09..e367192 100644
          this.queried = {} // new SMK.TYPE.FeatureSet()
  
          this.layerIds = []
-@@ -574,6 +575,96 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
+@@ -580,6 +581,96 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
          ] )
      }
  
@@ -882,7 +882,7 @@ index 1b8ef09..e367192 100644
          var self = this
  
 diff --git a/node_modules/@bcgov/smk/dist/smk.js b/node_modules/@bcgov/smk/dist/smk.js
-index 5cb507a..ae010aa 100644
+index 478a23f..9ae1ce9 100644
 --- a/node_modules/@bcgov/smk/dist/smk.js
 +++ b/node_modules/@bcgov/smk/dist/smk.js
 @@ -1162,10 +1162,13 @@ if ( skip ) return;
