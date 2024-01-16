@@ -77,7 +77,6 @@ dialog {
     align-items: center;
     max-width: 50em;
     max-height: calc( 100% - 5em );
-    font-family:"Meta W01 Medium", Arial, Helvetica, sans-serif;
     z-index: 3;
     padding: 0;
     border: none;
