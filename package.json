@@ -8,6 +8,9 @@
         "http-server": "^14.1.1",
         "patch-package": "^8.0.0"
     },
+    "overrides": {
+        "follow-redirects": ">=1.15.5"
+    },
     "scripts": {
         "postinstall": "patch-package",
         "view": "http-server -o -c-1"
