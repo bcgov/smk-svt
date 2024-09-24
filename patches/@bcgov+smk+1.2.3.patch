@@ -882,7 +882,7 @@ index da9be9b..ece9263 100644
          var self = this
  
 diff --git a/node_modules/@bcgov/smk/dist/smk.js b/node_modules/@bcgov/smk/dist/smk.js
-index 478a23f..9ae1ce9 100644
+index 725a3c8..fca0414 100644
 --- a/node_modules/@bcgov/smk/dist/smk.js
 +++ b/node_modules/@bcgov/smk/dist/smk.js
 @@ -1162,10 +1162,13 @@ if ( skip ) return;
