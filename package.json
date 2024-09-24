@@ -4,7 +4,7 @@
     "description": "Use this to look up the Speculation and Vacancy Tax rate for any location in British Columbia.",
     "author": "BC Data Map Team",
     "dependencies": {
-        "@bcgov/smk": "1.2.2",
+        "@bcgov/smk": "1.2.3",
         "http-server": "^14.1.1",
         "patch-package": "^8.0.0"
     },
