@@ -1,6 +1,6 @@
 # stage 1: use npm to install dependencies into node_modules 
 #          directory
-FROM node:alpine3.12 AS BUILD_IMAGE
+FROM node:alpine3.20 AS BUILD_IMAGE
 
 #RUN ls -la / &&  ls -la /srv && mkdir /srv
 WORKDIR /srv
