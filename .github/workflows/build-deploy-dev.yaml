@@ -57,7 +57,7 @@ jobs:
         GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
         DOCKER_REGISTRY: 'ghcr.io'
 
-    - name: deploying dev
+    - name: Deploying dev
       uses: bcgov/smk-actions/smk-deploy@main
       id: deploySMKContainer
       if: env.OPENSHIFT_SERVER_URL != '' &&  env.OPENSHIFT_TOKEN_DEV != '' && env.GHCR_USER != '' && env.GHCR_TOKEN != ''
@@ -69,3 +69,11 @@ jobs:
         DOCKER_REGISTRY: 'ghcr.io'
         PR_REVIEWERS: '["michaelpnelson"]'
         PR_MENTIONS: '["michaelpnelson"]'
+
+    - name: Deleting older images
+      uses: actions/delete-package-versions@v5
+      with:
+        package-name: 'smk-svt/smk-svt'
+        package-type: 'container'
+        token: ${{ secrets.GHCR_TOKEN }}
+        min-versions-to-keep: 10
