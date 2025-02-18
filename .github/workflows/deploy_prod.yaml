@@ -26,7 +26,7 @@ jobs:
     defaults:
       run:
         shell: bash
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       OPENSHIFT_SERVER_URL: ${{secrets.OPENSHIFT_SERVER_URL}}
       OPENSHIFT_TOKEN_DEV: ${{secrets.OPENSHIFT_TOKEN_DEV}}
