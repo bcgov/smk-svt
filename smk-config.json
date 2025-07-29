@@ -15,7 +15,7 @@
             ],
             "zoom": 6.75
         },
-        "esriApiKey": "AAPK5bb722086a57494ca489964673efa00d37WUlSAxF-Kidlq4FZFTqYz4VfTlzv-j7yxXp_wf1xNSTvuj-AtEaPBUAKXbwVbr",
+        "esriApiKey": "ESRI_API_KEY",
         "baseMap": "Streets"
     },
     "layers": [
