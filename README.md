@@ -9,11 +9,9 @@ The Speculation and Vacancy Tax Location Map is an easy-to-use web-based map int
 ## Features
 
 - **Interactive Map Interface**: Zoom and pan across British Columbia to explore SVT jurisdictions
-- **Query-Enabled Layers**: Click on jurisdictions to view detailed information about SVT areas and rates
-- **BC Assessment Data**: Real-time integration with BC Assessment Services ArcGIS feature services
+- **Query-Enabled Layers**: Click on jurisdictions to view detailed information about SVT areas
 - **Address Search**: Locate properties and jurisdictions across the province
 - **Responsive Design**: Works on desktop and mobile devices
-- **Help & Documentation**: Built-in about dialog with links to official BC government resources
 
 ## Getting Started
 
@@ -57,12 +55,12 @@ The application is configured through `smk-config.json`, which defines:
 - **Map Viewer**: Leaflet-based viewer with initial zoom level and extent centered on BC
 - **Base Map**: Streets basemap from ESRI
 - **Layers**: BC Assessment Jurisdiction boundaries with SVT coverage information
-- **Tools**: Pan, zoom, search, layers panel and other interactive tools
+- **Tools**: Pan, zoom, search and other interactive tools
 - **Attributes**: Display of jurisdiction details and SVT status information
 
 ## Data Sources
 
-- **BC Assessment Jurisdictions**: ArcGIS Feature Services containing SVT jurisdiction boundaries and rates
+- **BC Assessment Jurisdictions**: ArcGIS Feature Services containing SVT jurisdiction boundaries
 - **Base Maps**: ESRI Maps (requires valid ESRI API key in configuration)
 
 ## Technologies Used
